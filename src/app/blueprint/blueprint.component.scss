@@ -1,0 +1,12 @@
+
+text {
+  user-select: none;
+  
+  &::selection {
+    background: none;
+  }
+}
+
+svg{
+  outline:0
+}

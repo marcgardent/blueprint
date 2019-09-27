@@ -1,0 +1,56 @@
+<svg width="100%" height="100%" css="svgText" style="background: #222" (focus)="focus()" (blur)="blur()">
+	<defs>
+		<pattern id="smallGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+			<path d="M 20 0 L 0 0 0 20" fill="none" stroke="#000" stroke-width="0.5" />
+		</pattern>
+
+		<pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse">
+			<rect width="100" height="100" fill="url(#smallGrid)" />
+			<path d="M 100 0 L 0 0 0 100" fill="none" stroke="black" stroke-width="1" />
+		</pattern>
+
+		<pattern id="largeGrid" width="500" height="500" patternUnits="userSpaceOnUse">
+			<rect width="500" height="500" fill="url(#grid)" />
+			<path d="M 500 0 L 0 0 0 500" fill="none" stroke="black" stroke-width="2" />
+		</pattern>
+	</defs>
+	<text x="10" y="20" font-family="Verdana" font-size="10" fill="#777">
+		Data Editor, "bring your language" - {{nodeCounter}} nodes / {{linkCounter}} links / velocity({{velocity.x}},{{velocity.y}}) / drag({{drag}})
+	</text>
+
+	<g [attr.transform]="'translate('+ paddingx + ' ' + paddingy+ ') ' + 'scale('+ scale + ')' ">
+
+		<rect x="-5000" y="-5000" width="10001" height="10001" fill="url(#largeGrid)" />
+
+		<!-- Nodes -->
+		<g *ngFor="let node of model.nodes">
+			<g app-node [model]="node" [context]="model" />
+		</g>
+		<g *ngIf="model.shadowLink">
+			<path [attr.d]="model.shadowLink.curvePath" stroke="yellow" fill="none" />
+		</g>
+
+		<g *ngFor="let node of model.nodes">
+			<g *ngFor="let field of node.fields">
+				<g app-field [model]="field" [context]="model" />
+				<g *ngFor="let child of field.children;let i=index">
+					<g app-field [model]="child" [context]="model" [position]="i+1" />
+				</g>
+			</g>
+		</g>
+	</g>
+	<g *ngIf="idle">
+		<rect x="-5000" y="-5000" width="10001" height="10001" fill="black" opacity="0.7" />
+    <text x="10" y="350" font-family="Verdana" font-size="50" fill="yellow">
+			DataCode Editor;
+		</text>
+     <line x1="10" y1="365" x2="600" y2="365" style="opacity:1;stroke:yellow;stroke-width:8"></line>
+		<text x="10" y="400" font-family="Verdana" font-size="30" fill="#777">
+			"code is data, data is code"
+		</text>
+<text x="10" y="450" font-family="Verdana" font-size="30" fill="#777">
+			"Bring your language"
+		</text>
+    
+	</g>
+</svg>

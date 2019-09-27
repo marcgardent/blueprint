@@ -1,0 +1,42 @@
+<svg:g>
+	<path *ngIf="model.inputLink" [attr.d]="model.inputLink.curvePath" stroke="white" fill="none" />
+
+	<g *ngIf="model.inputBehavior==='array'">
+		<rect [attr.x]="model.inputX-4" [attr.y]="model.inputY-4" width="8" height="8" rx="2" ry="2" class="spot">
+			</rect>
+			<circle [attr.cx]="model.inputX" [attr.cy]="model.inputY" r="8" class="snap" (mousedown)="onDragArray($event)"
+			 (mouseup)="onDropArray($event)">
+				</circle>
+	</g>
+
+
+	<!--input(scalar)-->
+	<g *ngIf="model.inputBehavior==='scalar'">
+		<circle [attr.cx]="model.inputX" [attr.cy]="model.inputY" r="4" class="spot"></circle>
+		<!--snap-->
+		<svg:circle [attr.cx]="model.inputX" [attr.cy]="model.inputY" r="9" class="snap" (mousedown)="onDragInput($event,model)"
+		 (mouseup)="onDropInput($event,model)">
+			</circle>
+	</g>
+
+  
+	<g *ngIf="model.inputBehavior==='array' || model.inputBehavior==='appender'">
+
+		<!-- inter -->
+		<rect [attr.x]="model.inputX-4-8" [attr.y]="model.inputY-4+8" width="8" height="8" rx="2" ry="2" class="spot" style="opacity:0.1">
+			</rect>
+
+    <line [attr.x1]="model.inputX-4" [attr.y1]="model.inputY-4+8+4" [attr.x2]="model.inputX" [attr.y2]="model.inputY-4+8+4" style="opacity:0.1;stroke:red;stroke-width:2" />
+
+			<!--snap inter-->
+			<circle [attr.cx]="model.inputX-8" [attr.cy]="model.inputY+8" r="8" class="snap" (mouseup)="onDropInter($event, model)">
+				</circle>
+	</g>
+
+	<!--output-->
+	<g *ngIf="model.outputBehavior==='standard'">
+		<circle [attr.cx]="model.outputX" [attr.cy]="model.outputY" r="4" fill="white" stroke="black"></circle>
+		<!--snap-->
+		<circle [attr.cx]="model.outputX" [attr.cy]="model.outputY" r="9" class="snap" (mousedown)="onDragOutput($event,model)" (mouseup)="onDropOutput($event,model)"></circle>
+		</g>
+	</svg:g>
