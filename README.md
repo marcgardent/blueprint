@@ -8,7 +8,7 @@ Wishlist:
 
 * Toolbox
 * Create/edit node groups
-* Backend server for colaborative
+* multi-users with backend-server
 
 ## Run/Edit online 
 
