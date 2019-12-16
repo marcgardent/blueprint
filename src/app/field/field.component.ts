@@ -35,6 +35,7 @@ export class FieldComponent implements OnInit {
       this.context.resetInput(this.model);
       this.context.dragOutput(this.context.outputField, this.context.mouseBlueprint);
     }
+    this.context.unselectAll();
     $event.stopPropagation();
   }
 
@@ -68,6 +69,7 @@ export class FieldComponent implements OnInit {
   public onDragOutput($event: MouseEvent) {
     this.context.outputField = this.model;
     this.context.dragOutput(this.model, this.context.mouseBlueprint);
+    this.context.unselectAll();
     $event.stopPropagation();
   }
 
