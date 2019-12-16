@@ -1,0 +1,11 @@
+<svg:g>
+	<rect x="-5000" y="-5000" width="10001" height="10001" fill="black" opacity="0.5" />
+	<foreignObject [attr.x]="10" [attr.y]="10" [attr.width]="200" [attr.height]="500" fill="black">
+		<xhtml:div class="root">
+      <h1>Toolbox</h1>
+      <div *ngFor="let template of context.templates">
+        <button>{{template.name}}</button>
+      </div>
+		</xhtml:div>
+	</foreignObject>
+</svg:g>

@@ -31,9 +31,22 @@ export class NodeModel {
   public box: Box = new Box();
 
   public fields = new Array<FieldModel>();
-  public allfields = new Array<FieldModel>();
-  
   public template: MetaNodeModel = undefined;
+
+  public clone(x:number, y:number) : NodeModel {
+    const ret = new NodeModel();
+    ret.title = this.title;
+    ret.box.height = this.box.height;
+    ret.box.width = this.box.width;
+    ret.box.x = x;
+    ret.box.y = y;
+
+     for(let field of this.fields){
+       ret.fields.push(field); // todo clone !?!
+     }
+
+     return ret;
+  }
 
   public unlink() {
     if (this.template !== undefined) {
@@ -54,8 +67,8 @@ export class NodeModel {
         i++;
       }
     }
-    this.allfields = ret;
-    this.box.height = 20 * (this.allfields.length+ 1)+5;
+    this.fields = ret;
+    this.box.height = 20 * (this.fields.length+ 1)+5;
   }
 
   public addInput(title="input") {
@@ -91,8 +104,10 @@ export class NodeModel {
 }
 
 export class MetaNodeModel {
+
+  
   public readonly instances: Array<NodeModel> = new Array();
-  public constructor(public readonly template: NodeModel) {
+  public constructor(public readonly template: NodeModel, public readonly name) {
 
   }
 
@@ -205,8 +220,9 @@ export class BlueprintModel {
   public selected: NodeModel = undefined
   public readonly nodes = new Array<NodeModel>();
   public readonly arrays = new Array<NodeModel>();
-
+  public readonly templates = new Array<MetaNodeModel>();
   public shadowLink: ShadowLinkModel = undefined;
+  public shadowNode: NodeModel= undefined;
 
   constructor() {
 
@@ -233,6 +249,10 @@ export class BlueprintModel {
     this.selected = undefined;
   }
 
+  public setTool(node: MetaNodeModel){
+    //this.shadowNode = node.add();
+  }
+
   public select(node: NodeModel) {
     this.selected = node;
     this.selected.selected = true;
@@ -248,8 +268,9 @@ export class BlueprintModel {
     this.arrays.push(n);
   }
 
-  public addTemplate(node: NodeModel) {
-    const t = new MetaNodeModel(node);
+  public addTemplate(node: NodeModel, name:string) {
+    const t = new MetaNodeModel(node, name);
+    this.templates.push(t);
     return t;
   }
 
@@ -269,6 +290,6 @@ export class BlueprintModel {
 
   public addInput(node: NodeModel, field: FieldModel) {
     //node.inputs.push(field);
-
+    
   }
 }
