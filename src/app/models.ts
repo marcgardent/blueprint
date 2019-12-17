@@ -58,21 +58,15 @@ export class NodeModel {
   public sortFields() {
     const ret = []
     let i = 0;
-    console.debug("sort", this.title);
     for(let field of this.fields){
       field.index = i;
-      console.debug("field",i, field.title, field.children.length, field.parent.title);
-      ret.push(field);
       i++;
       for(let child of field.children){
-        child.index = i;
-        console.debug("subfield",i, child.title, child.children.length, child.parent.title);
-        ret.push(child);
+        child.index = i; 
         i++;
       }
     }
-    this.fields = ret;
-    this.box.height = 20 * (this.fields.length+ 1)+5;
+    this.box.height = 20 * (i+ 1)+5;
   }
 
   public addInput(title="input") {

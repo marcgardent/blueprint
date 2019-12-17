@@ -34,7 +34,7 @@ export class BlueprintComponent implements OnInit {
 
 
   ngOnInit() {
-    
+
     this.model.addNode(this.scalarFactory())
     this.model.addNode(this.arrayFactory())
     /*
