@@ -1,0 +1,69 @@
+
+# Use case for blueprint project
+
+#########################
+Token:
+#########################
+    binding: "models.Token"
+    inputs:
+        symbol : string
+        name : string
+        description : string
+
+#########################
+Counter:
+#########################
+    binding: "models.Counter"
+    inputs:
+        token : Token
+
+#########################
+Set:
+#########################
+    binding: "models.Set"
+    inputs:
+        token: Token
+        content: list(Object)
+
+#########################
+Action:
+#########################
+    description: "Do nothing is abstract of whole actions"
+    binding: "actions.Action"
+    inputs:
+        token :
+            type: Token
+            description : "token to describe the action"
+    outputs:
+        self: Action
+
+#########################
+Composite:
+#########################
+    description: "Composite is a entity with several traits (Actions)"
+    binding: "actions.Composite"
+    inputs:
+        token :
+            type: Token
+            description : "token to describe the composite"
+        traits :
+            type: dictionary(Token, Action)
+            description: "actions of the composite identified by a token"
+    outputs:
+        self: Composite
+
+#########################
+While:
+#########################
+    description: "While can execute the action: execute the action!"
+    binding: "actions.While"
+    inputs:
+        token :
+            type: Token
+            description : "token to describe the action"
+        action :
+            type:
+        action:
+            type: Action
+    outputs:
+        self: Action

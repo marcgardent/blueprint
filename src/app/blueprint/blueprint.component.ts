@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { NodeComponent } from '../node/node.component'
-import { NodeModel, BlueprintModel, FieldModel, Position } from '../models'
+import { NodeModel, BlueprintModel, FieldModel, Position, MetaNodeModel } from '../models'
 import { GameloopService } from '../gameloop.service'
 
 @Component({
@@ -34,9 +34,14 @@ export class BlueprintComponent implements OnInit {
 
 
   ngOnInit() {
+    
+    this.model.addNode(this.scalarFactory())
+    this.model.addNode(this.arrayFactory())
+    /*
     this.model.addTemplate(this.complexFactory(), "complex")
     this.model.addTemplate(this.scalarFactory(), "scalar")
     this.model.addTemplate(this.arrayFactory(), "array")
+    */
   }
 
   private complexFactory(): NodeModel {
@@ -219,5 +224,11 @@ export class BlueprintComponent implements OnInit {
 
   public blur() {
     //this.idle = true;
+  }
+
+  public onSelectedTemplate(template: MetaNodeModel){
+    this.toolbox = false;
+    const instance = template.createInstance(this.model.mouseBlueprint.x, this.model.mouseBlueprint.y);
+    this.model.addNode(instance);
   }
 }

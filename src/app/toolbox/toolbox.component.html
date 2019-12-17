@@ -4,7 +4,7 @@
 		<xhtml:div class="root">
       <h1>Toolbox</h1>
       <div *ngFor="let template of context.templates">
-        <button>{{template.name}}</button>
+        <button (click)="createInstance(template)">{{template.name}}</button>
       </div>
 		</xhtml:div>
 	</foreignObject>
