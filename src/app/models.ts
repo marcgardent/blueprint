@@ -31,9 +31,23 @@ export class NodeModel {
   public box: Box = new Box();
 
   public fields = new Array<FieldModel>();
-  public allfields = new Array<FieldModel>();
-  
   public template: MetaNodeModel = undefined;
+
+  public clone(x:number, y:number) : NodeModel {
+    const ret = new NodeModel();
+    ret.title = this.title;
+    ret.box.height = this.box.height;
+    ret.box.width = this.box.width;
+    ret.box.x = x;
+    ret.box.y = y;
+
+    for(let field of this.fields){
+      ret.fields.push(field.clone(ret));
+    }
+    ret.template = this.template;
+    ret.sortFields();
+     return ret;
+  }
 
   public unlink() {
     if (this.template !== undefined) {
@@ -46,16 +60,13 @@ export class NodeModel {
     let i = 0;
     for(let field of this.fields){
       field.index = i;
-      ret.push(field);
       i++;
       for(let child of field.children){
-        child.index = i;
-        ret.push(child);
+        child.index = i; 
         i++;
       }
     }
-    this.allfields = ret;
-    this.box.height = 20 * (this.allfields.length+ 1)+5;
+    this.box.height = 20 * (i+ 1)+5;
   }
 
   public addInput(title="input") {
@@ -72,7 +83,7 @@ export class NodeModel {
     this.fields.push(field);
     this.sortFields();
   }
-
+ 
   public addOuput(title="output") {
     const field = new FieldModel(this);
     field.title =title;
@@ -91,21 +102,29 @@ export class NodeModel {
 }
 
 export class MetaNodeModel {
+  
   public readonly instances: Array<NodeModel> = new Array();
-  public constructor(public readonly template: NodeModel) {
+  public constructor(public readonly template: NodeModel, public readonly name) {
 
   }
 
   public remove(node: NodeModel) {
     const index = this.instances.indexOf(node, 0);
     if (index > -1) {
-      this.instances[index] = undefined;
+      this.instances[index].template = undefined;
       this.instances.splice(index, 1);
     }
   }
 
   public add(node: NodeModel) {
     this.instances.push(node);
+    node.template = this;
+  }
+
+  public createInstance(x:number, y:number) : NodeModel{
+    const ret = this.template.clone(x,y);
+    this.add(ret);
+    return ret;
   }
 }
 
@@ -139,6 +158,18 @@ export class FieldModel {
   }
 
   public constructor(public readonly parent: NodeModel) {
+
+  }
+
+  public clone(parent:NodeModel) {
+    const ret = new FieldModel(parent);
+    ret.index = this.index;
+    ret.inputBehavior = this.inputBehavior;
+    ret.outputBehavior = this.outputBehavior;
+    ret.group = this.group == this ? ret : undefined; // todo clone in any case
+    ret.title = this.title;
+    //Todo copy every fields to 'copy' case
+    return ret;
   }
 
   public addItem(index : number): FieldModel {
@@ -205,8 +236,9 @@ export class BlueprintModel {
   public selected: NodeModel = undefined
   public readonly nodes = new Array<NodeModel>();
   public readonly arrays = new Array<NodeModel>();
-
+  public readonly templates = new Array<MetaNodeModel>();
   public shadowLink: ShadowLinkModel = undefined;
+  public shadowNode: NodeModel= undefined;
 
   constructor() {
 
@@ -233,6 +265,10 @@ export class BlueprintModel {
     this.selected = undefined;
   }
 
+  public setTool(node: MetaNodeModel){
+    //this.shadowNode = node.add();
+  }
+
   public select(node: NodeModel) {
     this.selected = node;
     this.selected.selected = true;
@@ -248,8 +284,9 @@ export class BlueprintModel {
     this.arrays.push(n);
   }
 
-  public addTemplate(node: NodeModel) {
-    const t = new MetaNodeModel(node);
+  public addTemplate(node: NodeModel, name:string) {
+    const t = new MetaNodeModel(node, name);
+    this.templates.push(t);
     return t;
   }
 
@@ -258,17 +295,17 @@ export class BlueprintModel {
   }
 
   public addItem(input: FieldModel, output: FieldModel, index: number) {
+    if(input.group.inputBehavior != "appender") debugger;
     const newfield = input.group.addItem(index);
     newfield.setInputLink(output);
   }
   
-
   public resetInput(field: FieldModel) {
     field.inputLink = undefined;
   }
 
   public addInput(node: NodeModel, field: FieldModel) {
     //node.inputs.push(field);
-
+    
   }
 }

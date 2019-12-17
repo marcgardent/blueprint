@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { NodeComponent } from '../node/node.component'
-import { NodeModel, BlueprintModel, FieldModel, Position } from '../models'
+import { NodeModel, BlueprintModel, FieldModel, Position, MetaNodeModel } from '../models'
 import { GameloopService } from '../gameloop.service'
 
 @Component({
@@ -16,6 +16,7 @@ export class BlueprintComponent implements OnInit {
   public mouse = new Position(0, 0);
   public idle = true;
   public drag = false;
+  public toolbox = false;
   public model: BlueprintModel = new BlueprintModel();
 
   public get nodeCounter(): number { return this.model.nodes.length; }
@@ -31,16 +32,57 @@ export class BlueprintComponent implements OnInit {
     this.gameloop.tick.subscribe((delta) => { this.tick(delta) })
   }
 
-  ngOnInit() {
-    this.setMouse(100, 100);
-    const s = this.addScalar();
-    this.setMouse(300, 100);
-    const c = this.addComplex();
-    this.setMouse(500, 100);
-    const a = this.addArray();
 
-    //this.model.addLink(b.fields[0], a.fields[2]);
+  ngOnInit() {
+
+    this.model.addNode(this.scalarFactory())
+    this.model.addNode(this.arrayFactory())
+    /*
+    this.model.addTemplate(this.complexFactory(), "complex")
+    this.model.addTemplate(this.scalarFactory(), "scalar")
+    this.model.addTemplate(this.arrayFactory(), "array")
+    */
   }
+
+  private complexFactory(): NodeModel {
+    const child = new NodeModel();
+    child.box.height = 150;
+    child.box.width = 100;
+    child.box.x = 0;
+    child.box.y = 0;
+    child.addInput();
+    child.addBehavior();
+    child.addOuput();
+    child.addArray();
+    return child;
+  }
+
+  //@HostListener('document:keydown.w', ['$event'])
+  public scalarFactory(): NodeModel {
+    const child = new NodeModel();
+    child.box.height = 50;
+    child.box.width = 100;
+    child.box.x = 0;
+    child.box.y = 0;
+    child.title = "Scalar"
+    child.addOuput();
+    return child;
+  }
+
+  //@HostListener('document:keydown.x', ['$event'])
+  public arrayFactory(): NodeModel {
+    const child = new NodeModel();
+    child.box.height = 100;
+    child.box.width = 100;
+    child.box.x = 0;
+    child.box.y = 0;
+    child.title = "Array"
+    child.addArray();
+    child.addOuput("length");
+    child.addOuput("array");
+    return child;
+  }
+
 
   @HostListener('document:keydown.z', ['$event'])
   public upBegin(): void { this.upControl = 1; }
@@ -65,46 +107,7 @@ export class BlueprintComponent implements OnInit {
   @HostListener('document:keyup.q', ['$event'])
   public leftEnd(): void { this.leftControl = 0; }
 
-  @HostListener('document:keydown.c', ['$event'])
-  public addComplex(): NodeModel {
-    const child = new NodeModel();
-    child.box.height = 150;
-    child.box.width = 100;
-    child.box.x = this.model.mouseBlueprint.x;
-    child.box.y = this.model.mouseBlueprint.y;
-    child.addInput();
-    child.addBehavior();
-    child.addOuput();
-    child.addArray();
-    this.model.addNode(child);
-    return child;
-  }
 
-  @HostListener('document:keydown.w', ['$event'])
-  public addScalar(): void {
-    const child = new NodeModel();
-    child.box.height = 50;
-    child.box.width = 100;
-    child.box.x = this.model.mouseBlueprint.x;
-    child.box.y = this.model.mouseBlueprint.y;
-    child.title = "Scalar"
-    child.addOuput();
-    this.model.addNode(child);
-  }
-
-  @HostListener('document:keydown.x', ['$event'])
-  public addArray(): void {
-    const child = new NodeModel();
-    child.box.height = 100;
-    child.box.width = 100;
-    child.box.x = this.model.mouseBlueprint.x;
-    child.box.y = this.model.mouseBlueprint.y;
-    child.title = "Array"
-    child.addArray();
-    child.addOuput("length");
-    child.addOuput("array");
-    this.model.addNode(child);
-  }
 
   @HostListener('window:wheel', ['$event'])
   onScroll($event: WheelEvent) {
@@ -126,7 +129,7 @@ export class BlueprintComponent implements OnInit {
     $event.stopPropagation()
   }
 
- 
+
   @HostListener('mousedown', ['$event'])
   onMouseDown($event: MouseEvent) {
     this.drag = $event.buttons == 1;
@@ -136,9 +139,8 @@ export class BlueprintComponent implements OnInit {
   @HostListener('mousemove', ['$event'])
   onMouseMove($event: MouseEvent) {
     this.setMouse($event.clientX, $event.clientY)
-    const deltaX = $event.movementX / 2;
-    const deltaY = $event.movementY / 2;
-
+    const deltaX = $event.movementX / window.devicePixelRatio;
+    const deltaY = $event.movementY / window.devicePixelRatio;
 
     if ($event.buttons == 2 || $event.buttons == 4) {
       // move workspace
@@ -160,8 +162,13 @@ export class BlueprintComponent implements OnInit {
   }
 
   @HostListener('document:keydown.del', ['$event'])
-  public onDelete(){
+  public onDelete() {
     console.info("ee")
+  }
+
+  @HostListener('document:keyup.e', ['$event'])
+  public onToolbox(): void {
+    this.toolbox = !this.toolbox;
   }
 
   private setMouse(x, y) {
@@ -196,7 +203,7 @@ export class BlueprintComponent implements OnInit {
     this.paddingy += this.velocity.y;
     this.paddingx += this.velocity.x;
     this.updateLogicMouse();
-    
+
     if (this.drag && this.model.selected && !this.model.shadowLink) {
       // move node
       this.model.selected.box.x -= this.velocity.x / this.scale;
@@ -217,5 +224,11 @@ export class BlueprintComponent implements OnInit {
 
   public blur() {
     //this.idle = true;
+  }
+
+  public onSelectedTemplate(template: MetaNodeModel){
+    this.toolbox = false;
+    const instance = template.createInstance(this.model.mouseBlueprint.x, this.model.mouseBlueprint.y);
+    this.model.addNode(instance);
   }
 }

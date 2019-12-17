@@ -6,7 +6,7 @@ export class GameloopService implements OnDestroy {
   public tick = new Subject<number>();
   last : number = Date.now()
   public framerate  = 20;
-  private readonly intervalHandle : number;
+  private readonly intervalHandle : any;
 
   constructor() {
     console.info("init")
