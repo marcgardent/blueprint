@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
-import { NodeModel, BlueprintModel } from "../models"
+import { MetaNodeModel, NodeModel, BlueprintModel } from "../models"
 
 @Component({
   selector: '[app-toolbox]',
@@ -8,13 +8,16 @@ import { NodeModel, BlueprintModel } from "../models"
 })
 export class ToolboxComponent implements OnInit {
   
-  @Output() onSelected = new EventEmitter<NodeModel>();
+  @Output() onSelected = new EventEmitter<MetaNodeModel>();
   @Input() context : BlueprintModel;
 
   constructor() { }
 
   ngOnInit(): void {
-    throw new Error("Method not implemented.");
+
   }
 
+  public createInstance(template : MetaNodeModel): void {
+    this.onSelected.emit(template);
+  }
 }

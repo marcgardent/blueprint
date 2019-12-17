@@ -17,8 +17,7 @@ export class FieldComponent implements OnInit {
 
   @Input()
   position : number =0;
-
-
+  
   constructor() { }
 
   ngOnInit() {

@@ -41,10 +41,11 @@ export class NodeModel {
     ret.box.x = x;
     ret.box.y = y;
 
-     for(let field of this.fields){
-       ret.fields.push(field); // todo clone !?!
-     }
-
+    for(let field of this.fields){
+      ret.fields.push(field.clone(ret));
+    }
+    ret.template = this.template;
+    ret.sortFields();
      return ret;
   }
 
@@ -57,12 +58,15 @@ export class NodeModel {
   public sortFields() {
     const ret = []
     let i = 0;
+    console.debug("sort", this.title);
     for(let field of this.fields){
       field.index = i;
+      console.debug("field",i, field.title, field.children.length, field.parent.title);
       ret.push(field);
       i++;
       for(let child of field.children){
         child.index = i;
+        console.debug("subfield",i, child.title, child.children.length, child.parent.title);
         ret.push(child);
         i++;
       }
@@ -85,7 +89,7 @@ export class NodeModel {
     this.fields.push(field);
     this.sortFields();
   }
-
+ 
   public addOuput(title="output") {
     const field = new FieldModel(this);
     field.title =title;
@@ -104,7 +108,6 @@ export class NodeModel {
 }
 
 export class MetaNodeModel {
-
   
   public readonly instances: Array<NodeModel> = new Array();
   public constructor(public readonly template: NodeModel, public readonly name) {
@@ -114,13 +117,20 @@ export class MetaNodeModel {
   public remove(node: NodeModel) {
     const index = this.instances.indexOf(node, 0);
     if (index > -1) {
-      this.instances[index] = undefined;
+      this.instances[index].template = undefined;
       this.instances.splice(index, 1);
     }
   }
 
   public add(node: NodeModel) {
     this.instances.push(node);
+    node.template = this;
+  }
+
+  public createInstance(x:number, y:number) : NodeModel{
+    const ret = this.template.clone(x,y);
+    this.add(ret);
+    return ret;
   }
 }
 
@@ -154,6 +164,18 @@ export class FieldModel {
   }
 
   public constructor(public readonly parent: NodeModel) {
+
+  }
+
+  public clone(parent:NodeModel) {
+    const ret = new FieldModel(parent);
+    ret.index = this.index;
+    ret.inputBehavior = this.inputBehavior;
+    ret.outputBehavior = this.outputBehavior;
+    ret.group = this.group == this ? ret : undefined; // todo clone in any case
+    ret.title = this.title;
+    //Todo copy every fields to 'copy' case
+    return ret;
   }
 
   public addItem(index : number): FieldModel {
@@ -279,11 +301,11 @@ export class BlueprintModel {
   }
 
   public addItem(input: FieldModel, output: FieldModel, index: number) {
+    if(input.group.inputBehavior != "appender") debugger;
     const newfield = input.group.addItem(index);
     newfield.setInputLink(output);
   }
   
-
   public resetInput(field: FieldModel) {
     field.inputLink = undefined;
   }
