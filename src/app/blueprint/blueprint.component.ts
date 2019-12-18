@@ -16,8 +16,9 @@ export class BlueprintComponent implements OnInit {
   public idle = true;
   public drag = false;
   public toolbox = false;
-  @Input()
-  public model: BlueprintModel;
+  public editingEnabled = false;
+
+  @Input() public model: BlueprintModel;
 
   public get nodeCounter(): number { return this.model.nodes.length; }
   public get linkCounter(): number { return 0; }
@@ -33,7 +34,7 @@ export class BlueprintComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
   }
 
   private complexFactory(): NodeModel {
@@ -179,27 +180,28 @@ export class BlueprintComponent implements OnInit {
 
   private pixelrate = 500 / 1000; /* pixel/ms */
   private tick(delta: number) {
+    if (!this.editingEnabled) {
+      // acceleration
+      const accX = this.leftControl - this.rightControl;
+      const accY = this.upControl - this.downControl;
+      this.velocity.x += accX * delta / 2;
+      this.velocity.y += accY * delta / 2;
 
-    // acceleration
-    const accX = this.leftControl - this.rightControl;
-    const accY = this.upControl - this.downControl;
-    this.velocity.x += accX * delta / 2;
-    this.velocity.y += accY * delta / 2;
+      this.velocity.scale(0.5); // air resistance ;)
+      const epsilon = 0.01;
+      if (this.velocity.x < epsilon && this.velocity.x > -epsilon) { this.velocity.x = 0; }
+      if (this.velocity.y < epsilon && this.velocity.y > -epsilon) { this.velocity.y = 0; }
 
-    this.velocity.scale(0.5); // air resistance ;)
-    const epsilon = 0.01;
-    if (this.velocity.x < epsilon && this.velocity.x > -epsilon) { this.velocity.x = 0; }
-    if (this.velocity.y < epsilon && this.velocity.y > -epsilon) { this.velocity.y = 0; }
+      //move
+      this.paddingy += this.velocity.y;
+      this.paddingx += this.velocity.x;
+      this.updateLogicMouse();
 
-    //move
-    this.paddingy += this.velocity.y;
-    this.paddingx += this.velocity.x;
-    this.updateLogicMouse();
-
-    if (this.drag && this.model.selected && !this.model.shadowLink) {
-      // move node
-      this.model.selected.box.x -= this.velocity.x / this.scale;
-      this.model.selected.box.y -= this.velocity.y / this.scale;
+      if (this.drag && this.model.selected && !this.model.shadowLink) {
+        // move node
+        this.model.selected.box.x -= this.velocity.x / this.scale;
+        this.model.selected.box.y -= this.velocity.y / this.scale;
+      }
     }
   }
 
@@ -218,10 +220,18 @@ export class BlueprintComponent implements OnInit {
     //this.idle = true;
   }
 
-  public onSelectedTemplate(template: MetaNodeModel){
+  public onSelectedTemplate(template: MetaNodeModel) {
     this.toolbox = false;
-    console.debug("create node!", template,this.model.mouseBlueprint )
+    console.debug("create node!", template, this.model.mouseBlueprint)
     const instance = template.createInstance(this.model.mouseBlueprint.x, this.model.mouseBlueprint.y);
     this.model.addNode(instance);
+  }
+
+
+  public nodeEdited(): void {
+    this.editingEnabled = false;
+  }
+  public nodeEditing(): void {
+    this.editingEnabled = true;
   }
 }

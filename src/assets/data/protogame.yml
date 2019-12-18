@@ -58,14 +58,12 @@ Composite:
 #########################
 While:
 #########################
-    description: "While can execute the action: execute the action!"
+    description: "While can execute the action: do execute the action!"
     binding: "actions.While"
     inputs:
         token :
             type: Token
             description : "token to describe the action"
-        action :
-            type:
         action:
             type: Action
     outputs:

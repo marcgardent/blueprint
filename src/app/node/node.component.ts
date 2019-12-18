@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {NodeModel, BlueprintModel } from '../models';
 @Component({
   selector: '[app-node]',
@@ -9,6 +9,8 @@ export class NodeComponent implements OnInit {
 
   @Input() model = new NodeModel();
   @Input() context = new BlueprintModel();
+  @Output() onEditing = new EventEmitter<void>();
+  @Output() onEdited = new EventEmitter<void>();
 
   constructor() { }
 
@@ -20,5 +22,13 @@ export class NodeComponent implements OnInit {
     this.context.select(this.model);
 
     //$event.stopPropagation();
+  }
+
+  public editing(){
+    this.onEditing.emit();
+  }
+  
+  public edited(){
+    this.onEdited.emit();
   }
 }

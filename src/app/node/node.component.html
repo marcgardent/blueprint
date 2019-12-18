@@ -7,7 +7,13 @@
 			<span>{{selected}} {{model.title}}</span>
     </div>
     <ng-container *ngFor="let field of model.fields" >
-      <div  [ngClass]="{'block':true, 'output': field.outputBehavior!='none' }">{{field.title}}</div>
+      <div *ngIf="field.formBehavior=='none'"  [ngClass]="{'block':true, 'output': field.outputBehavior!='none' }">
+        {{field.title}}
+      </div>
+      <div *ngIf="field.formBehavior=='string' || field.formBehavior=='number'"  [ngClass]="{'block':true, 'form': true }">
+        <label>{{field.title}}</label>:<input type="text" (focus)="editing()" 
+        (blur)="edited()"></input>
+      </div>
       <ng-container *ngFor="let child of field.children;let i =index" >
         <div  class="block item">{{child.title}}[{{i}}]</div>
       </ng-container>

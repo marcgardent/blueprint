@@ -8,9 +8,10 @@ import { NodeComponent } from './node/node.component';
 import { FieldComponent } from './field/field.component';
 import { GameloopService } from './gameloop.service';
 import { ToolboxComponent } from './toolbox/toolbox.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  imports:      [ BrowserModule, FormsModule ],
+  imports:      [ BrowserModule, FormsModule, HttpClientModule ],
   declarations: [ AppComponent, BlueprintComponent, NodeComponent, FieldComponent, ToolboxComponent],
   bootstrap:    [ AppComponent ],
   providers: [GameloopService]

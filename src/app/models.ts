@@ -6,14 +6,14 @@ export class Position {
     public y: number = 0) {
   }
 
-  public add(dx, dy){
-    this.x +=dx;
-    this.y +=dy;
+  public add(dx, dy) {
+    this.x += dx;
+    this.y += dy;
   }
 
-  public scale(factor){
-    this.x *=factor;
-    this.y *=factor;
+  public scale(factor) {
+    this.x *= factor;
+    this.y *= factor;
   }
 }
 
@@ -33,7 +33,7 @@ export class NodeModel {
   public fields = new Array<FieldModel>();
   public template: MetaNodeModel = undefined;
 
-  public clone(x:number, y:number) : NodeModel {
+  public clone(x: number, y: number): NodeModel {
     const ret = new NodeModel();
     ret.title = this.title;
     ret.box.height = this.box.height;
@@ -41,12 +41,12 @@ export class NodeModel {
     ret.box.x = x;
     ret.box.y = y;
 
-    for(let field of this.fields){
+    for (let field of this.fields) {
       ret.fields.push(field.clone(ret));
     }
     ret.template = this.template;
     ret.sortFields();
-     return ret;
+    return ret;
   }
 
   public unlink() {
@@ -58,18 +58,18 @@ export class NodeModel {
   public sortFields() {
     const ret = []
     let i = 0;
-    for(let field of this.fields){
+    for (let field of this.fields) {
       field.index = i;
       i++;
-      for(let child of field.children){
-        child.index = i; 
+      for (let child of field.children) {
+        child.index = i;
         i++;
       }
     }
-    this.box.height = 20 * (i+ 1)+5;
+    this.box.height = 20 * (i + 1) + 5;
   }
 
-  public addInput(title="input") {
+  public addInput(title = "input"): void {
     const field = new FieldModel(this);
     field.title = title;
     field.inputBehavior = "scalar"
@@ -77,24 +77,34 @@ export class NodeModel {
     this.sortFields();
   }
 
-  public addBehavior(title="behavior") {
+  public addStringInput(title = "string"): void {
     const field = new FieldModel(this);
-    field.title =title;
-    this.fields.push(field);
-    this.sortFields();
-  }
- 
-  public addOuput(title="output") {
-    const field = new FieldModel(this);
-    field.title =title;
-    field.outputBehavior = "standard"
+    field.title = title;
+    field.inputBehavior = "scalar"
+    field.formBehavior = "string"
     this.fields.push(field);
     this.sortFields();
   }
 
-  public addArray() {
+  public addBehavior(title = "behavior") {
     const field = new FieldModel(this);
-    field.inputBehavior = "appender"
+    field.title = title;
+    this.fields.push(field);
+    this.sortFields();
+  }
+
+  public addOuput(title = "output") {
+    const field = new FieldModel(this);
+    field.title = title;
+    field.outputBehavior = "standard";
+    this.fields.push(field);
+    this.sortFields();
+  }
+
+  public addArray(title = "appender") {
+    const field = new FieldModel(this);
+    field.title = title;
+    field.inputBehavior = "appender";
     field.group = field;
     this.fields.push(field);
     this.sortFields();
@@ -102,7 +112,7 @@ export class NodeModel {
 }
 
 export class MetaNodeModel {
-  
+
   public readonly instances: Array<NodeModel> = new Array();
   public constructor(public readonly template: NodeModel, public readonly name) {
 
@@ -121,8 +131,8 @@ export class MetaNodeModel {
     node.template = this;
   }
 
-  public createInstance(x:number, y:number) : NodeModel{
-    const ret = this.template.clone(x,y);
+  public createInstance(x: number, y: number): NodeModel {
+    const ret = this.template.clone(x, y);
     this.add(ret);
     return ret;
   }
@@ -147,37 +157,39 @@ export class FieldModel {
   public index = 0;
   public inputBehavior: "appender" | "array" | "scalar" | "none" = "none";
   public outputBehavior: "standard" | "none" = "none";
+  public formBehavior: "string" | "number" | "none" = "none";
 
-  public title: string = "field"
+  public title: string = "field";
   public inputLink: LinkModel = undefined;
   public children = new Array<FieldModel>();
-  public group : FieldModel = undefined;
+  public group: FieldModel = undefined;
 
-  public setInputLink(from :FieldModel){
-    this.inputLink = new LinkModel(this,from);
+  public setInputLink(from: FieldModel) {
+    this.inputLink = new LinkModel(this, from);
   }
 
   public constructor(public readonly parent: NodeModel) {
 
   }
 
-  public clone(parent:NodeModel) {
+  public clone(parent: NodeModel) {
     const ret = new FieldModel(parent);
     ret.index = this.index;
     ret.inputBehavior = this.inputBehavior;
     ret.outputBehavior = this.outputBehavior;
+    ret.formBehavior = this.formBehavior;
     ret.group = this.group == this ? ret : undefined; // todo clone in any case
     ret.title = this.title;
     //Todo copy every fields to 'copy' case
     return ret;
   }
 
-  public addItem(index : number): FieldModel {
+  public addItem(index: number): FieldModel {
     const ret = new FieldModel(this.parent);
     ret.group = this;
     ret.inputBehavior = "array";
-    
-    this.children.splice(index,0,ret);
+
+    this.children.splice(index, 0, ret);
     this.parent.sortFields();
     return ret;
   }
@@ -185,7 +197,7 @@ export class FieldModel {
   public removeItem(index: number) {
     console.info(index);
     console.info(this.children);
-    this.children.splice(index-1, 1);
+    this.children.splice(index - 1, 1);
     console.info(this.children);
 
     this.parent.sortFields();
@@ -196,7 +208,7 @@ export class FieldModel {
   }
 
   get inputY(): number {
-    return this.parent.box.y + (this.index+1) * SIZE_BLOCK + PADDING_BLOCK;
+    return this.parent.box.y + (this.index + 1) * SIZE_BLOCK + PADDING_BLOCK;
   }
 
   get outputX(): number {
@@ -204,7 +216,7 @@ export class FieldModel {
   }
 
   get outputY(): number {
-    return this.parent.box.y + (this.index+1) * SIZE_BLOCK + PADDING_BLOCK;
+    return this.parent.box.y + (this.index + 1) * SIZE_BLOCK + PADDING_BLOCK;
   }
 }
 
@@ -229,7 +241,7 @@ export class ShadowLinkModel {
 }
 
 export class BlueprintModel {
-  public mouseBlueprint : Position =new Position();
+  public mouseBlueprint: Position = new Position();
 
   public inputField: FieldModel = undefined;
   public outputField: FieldModel = undefined;
@@ -238,7 +250,7 @@ export class BlueprintModel {
   public readonly arrays = new Array<NodeModel>();
   public readonly templates = new Array<MetaNodeModel>();
   public shadowLink: ShadowLinkModel = undefined;
-  public shadowNode: NodeModel= undefined;
+  public shadowNode: NodeModel = undefined;
 
   constructor() {
 
@@ -265,7 +277,7 @@ export class BlueprintModel {
     this.selected = undefined;
   }
 
-  public setTool(node: MetaNodeModel){
+  public setTool(node: MetaNodeModel) {
     //this.shadowNode = node.add();
   }
 
@@ -283,12 +295,12 @@ export class BlueprintModel {
     n.title = "Array"
     this.arrays.push(n);
   }
-  
-  public addMetaNodeModels(metanodes: Array<MetaNodeModel>){
+
+  public addMetaNodeModels(metanodes: Array<MetaNodeModel>) {
     this.templates.push(...metanodes);
   }
-  
-  public addTemplate(node: NodeModel, name:string) {
+
+  public addTemplate(node: NodeModel, name: string) {
     const t = new MetaNodeModel(node, name);
     this.templates.push(t);
     return t;
@@ -299,17 +311,17 @@ export class BlueprintModel {
   }
 
   public addItem(input: FieldModel, output: FieldModel, index: number) {
-    if(input.group.inputBehavior != "appender") debugger;
+    if (input.group.inputBehavior != "appender") debugger;
     const newfield = input.group.addItem(index);
     newfield.setInputLink(output);
   }
-  
+
   public resetInput(field: FieldModel) {
     field.inputLink = undefined;
   }
 
   public addInput(node: NodeModel, field: FieldModel) {
     //node.inputs.push(field);
-    
+
   }
 }

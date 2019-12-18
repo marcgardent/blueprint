@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import * as metatypes from 'app/data/protogame.json';
+import { HttpClient } from "@angular/common/http";
+import YAML from 'yaml'
+
 import { BlueprintModel } from './models.js';
 import { loadMetaModelsFromJson} from 'app/io/metamodel'
 @Component({
@@ -10,11 +12,17 @@ import { loadMetaModelsFromJson} from 'app/io/metamodel'
 export class AppComponent implements OnInit  {
 
   public context: BlueprintModel;
+  
+  constructor(private httpClient: HttpClient) {
+
+  }
 
   ngOnInit(): void {
-    console.debug("init!!")
     this.context = new BlueprintModel();
-    this.context.addMetaNodeModels(loadMetaModelsFromJson(metatypes.default));
 
+    this.httpClient.get("assets/data/protogame.yml", {responseType: 'text'}).subscribe(data =>{
+      const metatypes = YAML.parse(data);
+      this.context.addMetaNodeModels(loadMetaModelsFromJson(metatypes));
+    });
   }
 }
