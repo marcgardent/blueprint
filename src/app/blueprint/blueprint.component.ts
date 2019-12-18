@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, Input } from '@angular/core';
 import { NodeComponent } from '../node/node.component'
 import { NodeModel, BlueprintModel, FieldModel, Position, MetaNodeModel } from '../models'
 import { GameloopService } from '../gameloop.service'
@@ -9,7 +9,6 @@ import { GameloopService } from '../gameloop.service'
   styleUrls: ['./blueprint.component.scss']
 })
 export class BlueprintComponent implements OnInit {
-
   public paddingx = 0;
   public paddingy = 0;
   public scale = 1;
@@ -17,7 +16,8 @@ export class BlueprintComponent implements OnInit {
   public idle = true;
   public drag = false;
   public toolbox = false;
-  public model: BlueprintModel = new BlueprintModel();
+  @Input()
+  public model: BlueprintModel;
 
   public get nodeCounter(): number { return this.model.nodes.length; }
   public get linkCounter(): number { return 0; }
@@ -32,16 +32,8 @@ export class BlueprintComponent implements OnInit {
     this.gameloop.tick.subscribe((delta) => { this.tick(delta) })
   }
 
-
   ngOnInit() {
-
-    this.model.addNode(this.scalarFactory())
-    this.model.addNode(this.arrayFactory())
-    /*
-    this.model.addTemplate(this.complexFactory(), "complex")
-    this.model.addTemplate(this.scalarFactory(), "scalar")
-    this.model.addTemplate(this.arrayFactory(), "array")
-    */
+    
   }
 
   private complexFactory(): NodeModel {
@@ -228,6 +220,7 @@ export class BlueprintComponent implements OnInit {
 
   public onSelectedTemplate(template: MetaNodeModel){
     this.toolbox = false;
+    console.debug("create node!", template,this.model.mouseBlueprint )
     const instance = template.createInstance(this.model.mouseBlueprint.x, this.model.mouseBlueprint.y);
     this.model.addNode(instance);
   }

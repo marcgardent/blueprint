@@ -283,7 +283,11 @@ export class BlueprintModel {
     n.title = "Array"
     this.arrays.push(n);
   }
-
+  
+  public addMetaNodeModels(metanodes: Array<MetaNodeModel>){
+    this.templates.push(...metanodes);
+  }
+  
   public addTemplate(node: NodeModel, name:string) {
     const t = new MetaNodeModel(node, name);
     this.templates.push(t);

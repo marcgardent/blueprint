@@ -9,14 +9,16 @@ Token:
         symbol : string
         name : string
         description : string
-
+    outputs:
+        self: Token
 #########################
 Counter:
 #########################
     binding: "models.Counter"
     inputs:
         token : Token
-
+    outputs:
+        self: Counter
 #########################
 Set:
 #########################
@@ -24,7 +26,8 @@ Set:
     inputs:
         token: Token
         content: list(Object)
-
+    outputs:
+        self: Set
 #########################
 Action:
 #########################
