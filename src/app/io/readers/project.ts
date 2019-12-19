@@ -1,4 +1,5 @@
 import { BlueprintModel } from "app/models";
+import { loadMetaModels } from './definitions';
 
 export interface Iloader{
     (ref:string) :  Promise<any>;
@@ -13,14 +14,18 @@ export class StandardFormatReader {
     public async loadProject(context: BlueprintModel, ref:string): Promise<any>{
         const project = await this.loader(ref);
         const json = await this.applyImports(project);
+        context.addMetaNodeModels(loadMetaModels(json.definitions))
     }
 
     async applyImports(json:any): Promise<any>{
         if("imports" in json){
-            for(let k in json.imports) {
-                const dep = await this.loadDependency(json.imports[k]);
-                json = this.merge(dep, json,'definitions')
-                json = this.merge(dep, json,'instances')
+            const imports = json.imports
+            for(let k in imports) {
+                const dep = await this.loadDependency(imports[k]);
+                json = {
+                    definitions : this.merge(dep, json,'definitions'),
+                    instances : this.merge(dep, json,'instances')
+                }
             }
             return json;
         }
@@ -43,7 +48,7 @@ export class StandardFormatReader {
             }
             definitions[def] = override_definitions[def];
         }
-        return {definitions : definitions};
+        return  definitions;
     }
 }
 

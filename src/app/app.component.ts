@@ -26,7 +26,7 @@ export class AppComponent implements OnInit  {
   }
 
   async httpClientLoader(ref:string): Promise<any>{
-    const data = await this.httpClient.get("assets/data/"+ ref, {responseType: 'text'});
+    const data = await this.httpClient.get("assets/data/"+ ref, {responseType: 'text'}).toPromise();
     const json = YAML.parse(data);
     json.__file__ = ref;
     return json;
