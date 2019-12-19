@@ -104,7 +104,7 @@ export class BlueprintComponent implements OnInit {
 
   @HostListener('window:wheel', ['$event'])
   onScroll($event: WheelEvent) {
-    const newscale = this.scale + 0.1 * ($event.wheelDelta / 120)
+    const newscale = this.scale + 0.1 * ($event.deltaY / 120)
     if (newscale > 0.01) {
       this.scale = newscale
     }
@@ -226,7 +226,6 @@ export class BlueprintComponent implements OnInit {
     const instance = template.createInstance(this.model.mouseBlueprint.x, this.model.mouseBlueprint.y);
     this.model.addNode(instance);
   }
-
 
   public nodeEdited(): void {
     this.editingEnabled = false;
