@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import YAML from 'yaml'
 
-import { BlueprintModel } from './models.js';
-import { loadMetaModelsFromJson} from 'app/io/metamodel'
+import { BlueprintModel } from './models'; 
+import { StandardFormatReader } from './io/readers/project';
+
 @Component({
   selector: 'my-app',
   templateUrl: './app.component.html',
@@ -19,10 +20,15 @@ export class AppComponent implements OnInit  {
 
   ngOnInit(): void {
     this.context = new BlueprintModel();
+    const self=this;
+    const reader = new StandardFormatReader((x)=>self.httpClientLoader(x), this.context);
+    reader.loadProject(this.context, "project.yml");
+  }
 
-    this.httpClient.get("assets/data/protogame.yml", {responseType: 'text'}).subscribe(data =>{
-      const metatypes = YAML.parse(data);
-      this.context.addMetaNodeModels(loadMetaModelsFromJson(metatypes));
-    });
+  async httpClientLoader(ref:string): Promise<any>{
+    const data = await this.httpClient.get("assets/data/"+ ref, {responseType: 'text'});
+    const json = YAML.parse(data);
+    json.__file__ = ref;
+    return json;
   }
 }

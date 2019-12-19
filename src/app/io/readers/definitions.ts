@@ -1,12 +1,12 @@
 import { MetaNodeModel, NodeModel } from "app/models";
 
-export function loadMetaModelsFromJson(json: any):  Array<MetaNodeModel> {
+export function loadMetaModels(definitions: any):  Array<MetaNodeModel> {
 
     const ret = new Array<MetaNodeModel>();
 
-    for (let key in  json) {
-        ret.push(loadMetaModel(key, json[key]));
-        console.debug("metamodel loaded", key, json[key]);
+    for (let key in  definitions) {
+        ret.push(loadMetaModel(key, definitions[key]));
+        console.debug("metamodel loaded", key, definitions[key]);
     }
 
     return ret;

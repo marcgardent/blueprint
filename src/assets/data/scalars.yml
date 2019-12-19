@@ -1,0 +1,10 @@
+
+definitions:
+    #########################
+    String:
+        #########################
+            binding: "str"
+            inputs:
+                text : string
+            outputs:
+                self: string
