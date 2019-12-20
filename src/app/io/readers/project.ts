@@ -22,6 +22,24 @@ export class StandardFormatReader {
             const meta = context.getMetaModel(instance.type);
             const node = meta.createInstance(instance.position.x, instance.position.y);
             node.title = k;
+
+            if('inputs'in instance) {
+                for(let k in instance.inputs){
+                    const val = instance.inputs[k];
+                    const field = node.getField(k);
+                    if(typeof(val) === 'object'){
+                            //todo link
+                        if( 'source' in val && 'output' in val){
+                            const node = context.getNodeModel(val.source);
+                            const source = node.getField(val.output);
+                            context.addLink(field, source);
+                        }
+                    } else{
+                        field.value = val;
+                    }
+                }
+            }
+
             context.addNode(node);
             console.debug("added", node);
         }   

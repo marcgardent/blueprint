@@ -28,13 +28,13 @@ function loadMetaModel(name:string, json : any): MetaNodeModel{
             template.addStringInput(input);
         }
         else{
-            template.addInput(input + ":"+ def.type)
+            template.addInput(input)
         }
     }
 
     for(let output in json.outputs){
         const def = loadType(json.outputs[output])
-        template.addOuput(output + ":"+ def.type);
+        template.addOuput(output);
     }
 
     return new MetaNodeModel(template, name);

@@ -26,6 +26,7 @@ export class Box {
 
 export class NodeModel {
 
+
   public title: string = "Node";
   public selected: boolean = false;
   public box: Box = new Box();
@@ -109,6 +110,11 @@ export class NodeModel {
     this.fields.push(field);
     this.sortFields();
   }
+
+  public getField(k: string): FieldModel {
+    const ret = this.fields.filter(x => x.title == k);
+    return ret[0]; // TODO Check errors
+  }
 }
 
 export class MetaNodeModel {
@@ -163,6 +169,7 @@ export class FieldModel {
   public inputLink: LinkModel = undefined;
   public children = new Array<FieldModel>();
   public group: FieldModel = undefined;
+  public value: string = "";
 
   public setInputLink(from: FieldModel) {
     this.inputLink = new LinkModel(this, from);
@@ -241,7 +248,8 @@ export class ShadowLinkModel {
 }
 
 export class BlueprintModel {
-    
+
+
   public mouseBlueprint: Position = new Position();
 
   public inputField: FieldModel = undefined;
@@ -327,8 +335,14 @@ export class BlueprintModel {
   }
 
   public getMetaModel(type: string): MetaNodeModel {
-      const template = this.templates.filter(x=> x.name==type);
-      //TODO check
-      return template[0];
-    }
+    const template = this.templates.filter(x => x.name == type);
+    //TODO check
+    return template[0];
+  }
+
+  public getNodeModel(source: any): NodeModel {
+    const node = this.nodes.filter(x => x.title == source);
+    //TODO check
+    return node[0];
+  }
 }

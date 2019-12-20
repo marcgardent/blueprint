@@ -12,7 +12,7 @@
       </div>
       <div *ngIf="field.formBehavior=='string' || field.formBehavior=='number'"  [ngClass]="{'block':true, 'form': true }">
         <label>{{field.title}}</label>:<input type="text" (focus)="editing()" 
-        (blur)="edited()"></input>
+        (blur)="edited()" [(ngModel)]="field.value"></input>
       </div>
       <ng-container *ngFor="let child of field.children;let i =index" >
         <div  class="block item">{{child.title}}[{{i}}]</div>
