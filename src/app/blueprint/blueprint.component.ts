@@ -160,11 +160,13 @@ export class BlueprintComponent implements OnInit {
     console.info("ee")
   }
 
-  @HostListener('document:keyup.space', ['$event'])
-  public onToolbox(): void {
+  @HostListener('document:keydown.f1', ['$event'])
+  public onToolbox($event: KeyboardEvent): void {
     this.toolboxPosition.x = this.model.mouseBlueprint.x;
     this.toolboxPosition.y = this.model.mouseBlueprint.y;
     this.toolbox = !this.toolbox;
+    event.stopPropagation();
+    event.preventDefault();
   }
 
   private setMouse(x, y) {

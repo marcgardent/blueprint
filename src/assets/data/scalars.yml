@@ -1,10 +1,14 @@
 
 definitions:
-    #########################
     String:
-        #########################
-            binding: "str"
-            inputs:
-                text : string
-            outputs:
-                self: string
+        binding: "str"
+        inputs:
+            text : string
+        outputs:
+            self: string
+    List:
+        binding: "list"
+        inputs:
+            content : list(*)
+        outputs:
+            self: list(*)

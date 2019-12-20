@@ -48,10 +48,10 @@ definitions:
         description: "Composite is a entity with several traits (Actions)"
         binding: "actions.Composite"
         inputs:
-            token :
+            token:
                 type: Token
-                description : "token to describe the composite"
-            traits :
+                description: "token to describe the composite"
+            traits:
                 type: dictionary(Token, Action)
                 description: "actions of the composite identified by a token"
         outputs:
@@ -63,9 +63,9 @@ definitions:
         description: "While can execute the action: do execute the action!"
         binding: "actions.While"
         inputs:
-            token :
+            token:
                 type: Token
-                description : "token to describe the action"
+                description: "token to describe the action"
             action:
                 type: Action
         outputs:

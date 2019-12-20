@@ -169,7 +169,7 @@ export class FieldModel {
   public inputLink: LinkModel = undefined;
   public children = new Array<FieldModel>();
   public group: FieldModel = undefined;
-  public value: string = "";
+  public value: string|number|boolean = "";
 
   public setInputLink(from: FieldModel) {
     this.inputLink = new LinkModel(this, from);
