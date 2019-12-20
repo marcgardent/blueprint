@@ -39,8 +39,8 @@
 				</g>
 			</g>
 		</g>
+		<g *ngIf="toolbox" app-toolbox [context]="model" [x]="toolboxPosition.x" [y]="toolboxPosition.y" (onSelected)="onSelectedTemplate($event)"></g>
 	</g>
-  <g *ngIf="toolbox" app-toolbox [context]="model" (onSelected)="onSelectedTemplate($event)"></g>
 
 	<!--splash screen -->
 	<g *ngIf="idle">

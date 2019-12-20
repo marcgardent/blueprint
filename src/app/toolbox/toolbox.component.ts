@@ -10,6 +10,8 @@ export class ToolboxComponent implements OnInit {
   
   @Output() onSelected = new EventEmitter<MetaNodeModel>();
   @Input() context : BlueprintModel;
+  @Input() x : number;
+  @Input() y : number;
 
   constructor() { }
 

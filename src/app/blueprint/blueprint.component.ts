@@ -28,6 +28,7 @@ export class BlueprintComponent implements OnInit {
   public leftControl = 0;
   public rightControl = 0;
   private velocity = new Position(0, 0);
+  public toolboxPosition = new Position(0, 0);
 
   constructor(private gameloop: GameloopService) {
     this.gameloop.tick.subscribe((delta) => { this.tick(delta) })
@@ -159,8 +160,10 @@ export class BlueprintComponent implements OnInit {
     console.info("ee")
   }
 
-  @HostListener('document:keyup.e', ['$event'])
+  @HostListener('document:keyup.space', ['$event'])
   public onToolbox(): void {
+    this.toolboxPosition.x = this.model.mouseBlueprint.x;
+    this.toolboxPosition.y = this.model.mouseBlueprint.y;
     this.toolbox = !this.toolbox;
   }
 
