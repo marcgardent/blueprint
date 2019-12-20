@@ -241,6 +241,7 @@ export class ShadowLinkModel {
 }
 
 export class BlueprintModel {
+    
   public mouseBlueprint: Position = new Position();
 
   public inputField: FieldModel = undefined;
@@ -324,4 +325,10 @@ export class BlueprintModel {
     //node.inputs.push(field);
 
   }
+
+  public getMetaModel(type: string): MetaNodeModel {
+      const template = this.templates.filter(x=> x.name==type);
+      //TODO check
+      return template[0];
+    }
 }

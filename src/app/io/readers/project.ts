@@ -14,7 +14,17 @@ export class StandardFormatReader {
     public async loadProject(context: BlueprintModel, ref:string): Promise<any>{
         const project = await this.loader(ref);
         const json = await this.applyImports(project);
-        context.addMetaNodeModels(loadMetaModels(json.definitions))
+        context.addMetaNodeModels(loadMetaModels(json.definitions));
+
+        //TODO design LOAD instance Func
+        for(let k in json.instances){
+            const instance = json.instances[k];
+            const meta = context.getMetaModel(instance.type);
+            const node = meta.createInstance(instance.position.x, instance.position.y);
+            node.title = k;
+            context.addNode(node);
+            console.debug("added", node);
+        }   
     }
 
     async applyImports(json:any): Promise<any>{
