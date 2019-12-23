@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import {NodeModel, BlueprintModel } from '../models';
+import { BlueprintModel } from "../models/BlueprintModel";
+import { NodeModel } from "../models/NodeModel";
 @Component({
   selector: '[app-node]',
   templateUrl: './node.component.html',

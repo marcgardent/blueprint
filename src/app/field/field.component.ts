@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FieldModel, BlueprintModel } from "../models"
+import { BlueprintModel } from "../models/BlueprintModel";
+import { FieldModel } from "../models/FieldModel";
 
 @Component({
   selector: '[app-field]',

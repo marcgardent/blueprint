@@ -1,4 +1,5 @@
-import { MetaNodeModel, NodeModel } from "app/models";
+import { MetaNodeModel } from "app/models/MetaNodeModel";
+import { NodeModel } from "app/models/NodeModel";
 
 export function loadMetaModels(definitions: any):  Array<MetaNodeModel> {
 

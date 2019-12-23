@@ -1,4 +1,5 @@
-import { BlueprintModel, FieldModel } from "app/models";
+import { BlueprintModel } from "app/models/BlueprintModel";
+import { FieldModel } from "app/models/FieldModel";
 
 export class InstanceBUilder {
 

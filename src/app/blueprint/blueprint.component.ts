@@ -1,6 +1,10 @@
 import { Component, OnInit, HostListener, Input } from '@angular/core';
 import { NodeComponent } from '../node/node.component'
-import { NodeModel, BlueprintModel, FieldModel, Position, MetaNodeModel } from '../models'
+import { BlueprintModel } from "../models/BlueprintModel";
+import { FieldModel } from "../models/FieldModel";
+import { MetaNodeModel } from "../models/MetaNodeModel";
+import { NodeModel } from "../models/NodeModel";
+import { Position } from "../models/Position";
 import { GameloopService } from '../gameloop.service'
 
 @Component({

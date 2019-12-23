@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import YAML from 'yaml'
 
-import { BlueprintModel } from './models'; 
+import { BlueprintModel } from "./models/BlueprintModel";
 import { StandardFormatReader } from './io/readers/project';
 
 @Component({

@@ -1,4 +1,4 @@
-import { BlueprintModel } from "app/models";
+import { BlueprintModel } from "app/models/BlueprintModel";
 import { loadMetaModels } from './definitions';
 import { InstanceBUilder } from './instances';
 
