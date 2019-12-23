@@ -8,6 +8,16 @@ export class NodeModel {
     public box: Box = new Box();
     public fields = new Array<FieldModel>();
     public template: MetaNodeModel = undefined;
+
+    public delete(){
+        if(this.template){
+            this.template.remove(this);
+        }
+        for(let f of this.fields){
+            f.delete();
+        }
+    }
+
     public clone(x: number, y: number): NodeModel {
         const ret = new NodeModel();
         ret.title = this.title;
@@ -22,11 +32,13 @@ export class NodeModel {
         ret.sortFields();
         return ret;
     }
+
     public unlink() {
         if (this.template !== undefined) {
             this.template.remove(this);
         }
     }
+
     public sortFields() {
         const ret = [];
         let i = 0;
@@ -40,6 +52,7 @@ export class NodeModel {
         }
         this.box.height = 20 * (i + 1) + 5;
     }
+
     public addInput(title = "input"): void {
         const field = new FieldModel(this);
         field.title = title;
@@ -47,20 +60,24 @@ export class NodeModel {
         this.fields.push(field);
         this.sortFields();
     }
+
     public addStringInput(title = "string"): void {
         const field = new FieldModel(this);
         field.title = title;
+    
         field.inputBehavior = "scalar";
         field.formBehavior = "string";
         this.fields.push(field);
         this.sortFields();
     }
+
     public addBehavior(title = "behavior") {
         const field = new FieldModel(this);
         field.title = title;
         this.fields.push(field);
         this.sortFields();
     }
+
     public addOuput(title = "output") {
         const field = new FieldModel(this);
         field.title = title;
@@ -68,6 +85,7 @@ export class NodeModel {
         this.fields.push(field);
         this.sortFields();
     }
+
     public addArray(title = "appender") {
         const field = new FieldModel(this);
         field.title = title;
@@ -76,8 +94,10 @@ export class NodeModel {
         this.fields.push(field);
         this.sortFields();
     }
+
     public getField(k: string): FieldModel {
         const ret = this.fields.filter(x => x.title == k);
         return ret[0]; // TODO Check errors
     }
+
 }

@@ -58,13 +58,16 @@ export class BlueprintModel {
     }
     public addLink(input: FieldModel, output: FieldModel) {
         input.setInputLink(output);
+        output.setOutputLink(input);
     }
+
     public addItem(input: FieldModel, output: FieldModel, index: number) {
         if (input.group.inputBehavior != "appender")
             debugger;
         const newfield = input.group.addItem(index);
-        newfield.setInputLink(output);
+        this.addLink(newfield, output);
     }
+
     public resetInput(field: FieldModel) {
         field.inputLink = undefined;
     }
@@ -80,5 +83,18 @@ export class BlueprintModel {
         const node = this.nodes.filter(x => x.title == source);
         //TODO check
         return node[0];
+    }
+    public deleteSelected():void{
+        if(this.selected != undefined){
+            this.deleteNode(this.selected);
+            this.selected = undefined;
+        }
+    }
+    public deleteNode(node:NodeModel) : void {
+        node.delete();
+        const index = this.nodes.indexOf(node, 0);
+        if (index > -1) {
+            this.nodes.splice(index, 1);
+        }
     }
 }

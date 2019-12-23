@@ -159,9 +159,9 @@ export class BlueprintComponent implements OnInit {
     this.model.unselectAll();
   }
 
-  @HostListener('document:keydown.del', ['$event'])
+  @HostListener('document:keydown.delete', ['$event'])
   public onDelete() {
-    console.info("ee")
+    this.model.deleteSelected();
   }
 
   @HostListener('document:keydown.f1', ['$event'])
@@ -242,4 +242,6 @@ export class BlueprintComponent implements OnInit {
   public nodeEditing(): void {
     this.editingEnabled = true;
   }
+
+  
 }

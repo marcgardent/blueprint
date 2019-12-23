@@ -5,6 +5,7 @@ export const SIZE_BLOCK = 20;
 export const PADDING_BLOCK = 14;
 
 export class FieldModel {
+
     public index = 0;
     public inputBehavior: "appender" | "array" | "scalar" | "none" = "none";
     public outputBehavior: "standard" | "none" = "none";
@@ -12,13 +13,32 @@ export class FieldModel {
     public title: string = "field";
     public inputLink: LinkModel = undefined;
     public children = new Array<FieldModel>();
+    public outputLinks = new Array<FieldModel>();
     public group: FieldModel = undefined;
     public value: string | number | boolean = "";
+
+    
+    public constructor(public readonly parent: NodeModel) {
+    }
+
     public setInputLink(from: FieldModel) {
         this.inputLink = new LinkModel(this, from);
     }
-    public constructor(public readonly parent: NodeModel) {
+
+    public setOutputLink(to: FieldModel){
+        this.outputLinks.push(to);
     }
+
+    public delete() {
+        for(let f of this.outputLinks){
+            f.unlink();
+        }
+    }
+
+    public unlink() {
+        this.inputLink = undefined;
+    }
+
     public clone(parent: NodeModel) {
         const ret = new FieldModel(parent);
         ret.index = this.index;
