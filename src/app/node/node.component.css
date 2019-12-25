@@ -17,7 +17,7 @@
   padding-right: 5px;
 }
 
-.node.selected {
+.node.active {
   border-color:orange;
 }
 

@@ -147,10 +147,10 @@ export class BlueprintComponent implements OnInit {
       $event.preventDefault()
       $event.stopPropagation()
     }
-    else if ($event.buttons == 1 && this.model.selected && !this.model.shadowLink) {
+    else if ($event.buttons == 1 && this.model.activeNode && !this.model.shadowLink) {
       // move node
-      this.model.selected.box.x += deltaX
-      this.model.selected.box.y += deltaY
+      this.model.activeNode.box.x += deltaX
+      this.model.activeNode.box.y += deltaY
     }
   }
 
@@ -206,10 +206,10 @@ export class BlueprintComponent implements OnInit {
       this.paddingx += this.velocity.x;
       this.updateLogicMouse();
 
-      if (this.drag && this.model.selected && !this.model.shadowLink) {
+      if (this.drag && this.model.activeNode && !this.model.shadowLink) {
         // move node
-        this.model.selected.box.x -= this.velocity.x / this.scale;
-        this.model.selected.box.y -= this.velocity.y / this.scale;
+        this.model.activeNode.box.x -= this.velocity.x / this.scale;
+        this.model.activeNode.box.y -= this.velocity.y / this.scale;
       }
     }
   }

@@ -8,7 +8,7 @@ export class BlueprintModel {
     public mouseBlueprint: Position = new Position();
     public inputField: FieldModel = undefined;
     public outputField: FieldModel = undefined;
-    public selected: NodeModel = undefined;
+    public activeNode: NodeModel = undefined;
     public readonly nodes = new Array<NodeModel>();
     public readonly arrays = new Array<NodeModel>();
     public readonly templates = new Array<MetaNodeModel>();
@@ -28,17 +28,17 @@ export class BlueprintModel {
         this.inputField = undefined;
     }
     public unselectAll() {
-        if (this.selected) {
-            this.selected.selected = false;
+        if (this.activeNode) {
+            this.activeNode.active = false;
         }
-        this.selected = undefined;
+        this.activeNode = undefined;
     }
     public setTool(node: MetaNodeModel) {
         //this.shadowNode = node.add();
     }
     public select(node: NodeModel) {
-        this.selected = node;
-        this.selected.selected = true;
+        this.activeNode = node;
+        this.activeNode.active = true;
     }
     public addNode(node: NodeModel) {
         this.nodes.push(node);
@@ -85,9 +85,9 @@ export class BlueprintModel {
         return node[0];
     }
     public deleteSelected():void{
-        if(this.selected != undefined){
-            this.deleteNode(this.selected);
-            this.selected = undefined;
+        if(this.activeNode != undefined){
+            this.deleteNode(this.activeNode);
+            this.activeNode = undefined;
         }
     }
     public deleteNode(node:NodeModel) : void {

@@ -4,7 +4,7 @@ import { MetaNodeModel } from "./MetaNodeModel";
 
 export class NodeModel {
     public title: string = "Node";
-    public selected: boolean = false;
+    public active: boolean = false;
     public box: Box = new Box();
     public fields = new Array<FieldModel>();
     public template: MetaNodeModel = undefined;
