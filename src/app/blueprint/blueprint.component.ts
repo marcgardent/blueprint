@@ -6,6 +6,7 @@ import { MetaNodeModel } from "../models/MetaNodeModel";
 import { NodeModel } from "../models/NodeModel";
 import { Position } from "../models/Position";
 import { GameloopService } from '../gameloop.service'
+import { ActiveHotkeys } from 'app/models/Hotkeys';
 
 @Component({
   selector: 'app-blueprint',
@@ -42,69 +43,79 @@ export class BlueprintComponent implements OnInit {
 
   }
 
-  private complexFactory(): NodeModel {
-    const child = new NodeModel();
-    child.box.height = 150;
-    child.box.width = 100;
-    child.box.x = 0;
-    child.box.y = 0;
-    child.addInput();
-    child.addBehavior();
-    child.addOuput();
-    child.addArray();
-    return child;
+  @HostListener('document:keyup', ['$event'])
+  keyUpEvent(event: KeyboardEvent) {
+    if (event.defaultPrevented || this.editingEnabled) {
+      return;
+    }
+    else if (event.key == ActiveHotkeys.UNSELECT) {
+      this.model.unselectAll();
+    }
+    else if (event.key == ActiveHotkeys.DOWN) {
+      this.downControl = 0;
+    }
+    else if (event.key == ActiveHotkeys.UP) {
+      this.upControl = 0;
+    }
+    else if (event.key == ActiveHotkeys.LEFT) {
+      this.leftControl = 0;
+    }
+    else if (event.key == ActiveHotkeys.RIGHT) {
+      this.rightControl = 0;
+    }
+    else {
+      return;
+    }
+
+    event.stopPropagation();
+    event.preventDefault();
   }
 
-  //@HostListener('document:keydown.w', ['$event'])
-  public scalarFactory(): NodeModel {
-    const child = new NodeModel();
-    child.box.height = 50;
-    child.box.width = 100;
-    child.box.x = 0;
-    child.box.y = 0;
-    child.title = "Scalar"
-    child.addOuput();
-    return child;
+  @HostListener('document:keydown', ['$event'])
+  keyDownEvent(event: KeyboardEvent) {
+    console.debug("key:", event.key);
+    if (event.defaultPrevented || this.editingEnabled) {
+      return;
+    }
+    else if (event.key == ActiveHotkeys.DOWN) {
+      this.downControl = 1;
+    }
+    else if (event.key == ActiveHotkeys.UP) {
+      this.upControl = 1;
+    }
+    else if (event.key == ActiveHotkeys.LEFT) {
+      this.leftControl = 1;
+    }
+    else if (event.key == ActiveHotkeys.RIGHT) {
+      this.rightControl = 1;
+    }
+    else {
+      return;
+    }
+
+    event.stopPropagation();
+    event.preventDefault();
   }
 
-  //@HostListener('document:keydown.x', ['$event'])
-  public arrayFactory(): NodeModel {
-    const child = new NodeModel();
-    child.box.height = 100;
-    child.box.width = 100;
-    child.box.x = 0;
-    child.box.y = 0;
-    child.title = "Array"
-    child.addArray();
-    child.addOuput("length");
-    child.addOuput("array");
-    return child;
+
+  @HostListener('document:keydown.a', ['$event'])
+  public onClick() {
+
   }
 
+  @HostListener('document:keydown.delete', ['$event'])
+  public onDelete() {
+    this.model.deleteSelected();
+  }
 
-  @HostListener('document:keydown.z', ['$event'])
-  public upBegin(): void { this.upControl = 1; }
-  @HostListener('document:keyup.z', ['$event'])
-  public upEnd(): void { this.upControl = 0; }
-
-  @HostListener('document:keydown.s', ['$event'])
-  public downBegin(): void { this.downControl = 1; }
-
-  @HostListener('document:keyup.s', ['$event'])
-  public downEnd(): void { this.downControl = 0; }
-
-  @HostListener('document:keydown.d', ['$event'])
-  public rightBegin(): void { this.rightControl = 1; }
-
-  @HostListener('document:keyup.d', ['$event'])
-  public rightEnd(): void { this.rightControl = 0; }
-
-  @HostListener('document:keydown.q', ['$event'])
-  public leftBegin(): void { this.leftControl = 1; }
-
-  @HostListener('document:keyup.q', ['$event'])
-  public leftEnd(): void { this.leftControl = 0; }
-
+  @HostListener('document:keydown.f1', ['$event'])
+  public onToolbox($event: KeyboardEvent): void {
+    this.toolboxPosition.x = this.model.mouseBlueprint.x;
+    this.toolboxPosition.y = this.model.mouseBlueprint.y;
+    this.toolbox = !this.toolbox;
+    event.stopPropagation();
+    event.preventDefault();
+  }
 
 
   @HostListener('window:wheel', ['$event'])
@@ -154,25 +165,6 @@ export class BlueprintComponent implements OnInit {
     }
   }
 
-  @HostListener('document:keydown.a', ['$event'])
-  public onClick() {
-    this.model.unselectAll();
-  }
-
-  @HostListener('document:keydown.delete', ['$event'])
-  public onDelete() {
-    this.model.deleteSelected();
-  }
-
-  @HostListener('document:keydown.f1', ['$event'])
-  public onToolbox($event: KeyboardEvent): void {
-    this.toolboxPosition.x = this.model.mouseBlueprint.x;
-    this.toolboxPosition.y = this.model.mouseBlueprint.y;
-    this.toolbox = !this.toolbox;
-    event.stopPropagation();
-    event.preventDefault();
-  }
-
   private setMouse(x, y) {
     this.mouse.x = x;
     this.mouse.y = y;
@@ -189,28 +181,26 @@ export class BlueprintComponent implements OnInit {
 
   private pixelrate = 500 / 1000; /* pixel/ms */
   private tick(delta: number) {
-    if (!this.editingEnabled) {
-      // acceleration
-      const accX = this.leftControl - this.rightControl;
-      const accY = this.upControl - this.downControl;
-      this.velocity.x += accX * delta / 2;
-      this.velocity.y += accY * delta / 2;
+    // acceleration
+    const accX = this.leftControl - this.rightControl;
+    const accY = this.upControl - this.downControl;
+    this.velocity.x += accX * delta / 2;
+    this.velocity.y += accY * delta / 2;
 
-      this.velocity.scale(0.5); // air resistance ;)
-      const epsilon = 0.01;
-      if (this.velocity.x < epsilon && this.velocity.x > -epsilon) { this.velocity.x = 0; }
-      if (this.velocity.y < epsilon && this.velocity.y > -epsilon) { this.velocity.y = 0; }
+    this.velocity.scale(0.5); // air resistance ;)
+    const epsilon = 0.01;
+    if (this.velocity.x < epsilon && this.velocity.x > -epsilon) { this.velocity.x = 0; }
+    if (this.velocity.y < epsilon && this.velocity.y > -epsilon) { this.velocity.y = 0; }
 
-      //move
-      this.paddingy += this.velocity.y;
-      this.paddingx += this.velocity.x;
-      this.updateLogicMouse();
+    //move
+    this.paddingy += this.velocity.y;
+    this.paddingx += this.velocity.x;
+    this.updateLogicMouse();
 
-      if (this.drag && this.model.activeNode && !this.model.shadowLink) {
-        // move node
-        this.model.activeNode.box.x -= this.velocity.x / this.scale;
-        this.model.activeNode.box.y -= this.velocity.y / this.scale;
-      }
+    if (this.drag && this.model.activeNode && !this.model.shadowLink) {
+      // move node
+      this.model.activeNode.box.x -= this.velocity.x / this.scale;
+      this.model.activeNode.box.y -= this.velocity.y / this.scale;
     }
   }
 
@@ -241,7 +231,6 @@ export class BlueprintComponent implements OnInit {
   }
   public nodeEditing(): void {
     this.editingEnabled = true;
+    this.upControl = this.downControl = this.leftControl = this.rightControl = 0;
   }
-
-  
 }

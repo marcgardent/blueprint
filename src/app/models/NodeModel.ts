@@ -5,15 +5,16 @@ import { MetaNodeModel } from "./MetaNodeModel";
 export class NodeModel {
     public title: string = "Node";
     public active: boolean = false;
+    public selected: boolean = false;
     public box: Box = new Box();
     public fields = new Array<FieldModel>();
     public template: MetaNodeModel = undefined;
 
-    public delete(){
-        if(this.template){
+    public delete() {
+        if (this.template) {
             this.template.remove(this);
         }
-        for(let f of this.fields){
+        for (let f of this.fields) {
             f.delete();
         }
     }
@@ -64,7 +65,7 @@ export class NodeModel {
     public addStringInput(title = "string"): void {
         const field = new FieldModel(this);
         field.title = title;
-    
+
         field.inputBehavior = "scalar";
         field.formBehavior = "string";
         this.fields.push(field);
@@ -100,4 +101,44 @@ export class NodeModel {
         return ret[0]; // TODO Check errors
     }
 
+}
+
+
+
+export function complexFactory(): NodeModel {
+    const child = new NodeModel();
+    child.box.height = 150;
+    child.box.width = 100;
+    child.box.x = 0;
+    child.box.y = 0;
+    child.addInput();
+    child.addBehavior();
+    child.addOuput();
+    child.addArray();
+    return child;
+}
+
+
+export function scalarFactory(): NodeModel {
+    const child = new NodeModel();
+    child.box.height = 50;
+    child.box.width = 100;
+    child.box.x = 0;
+    child.box.y = 0;
+    child.title = "Scalar"
+    child.addOuput();
+    return child;
+}
+
+export function arrayFactory(): NodeModel {
+    const child = new NodeModel();
+    child.box.height = 100;
+    child.box.width = 100;
+    child.box.x = 0;
+    child.box.y = 0;
+    child.title = "Array"
+    child.addArray();
+    child.addOuput("length");
+    child.addOuput("array");
+    return child;
 }

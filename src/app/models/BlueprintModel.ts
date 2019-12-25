@@ -9,6 +9,7 @@ export class BlueprintModel {
     public inputField: FieldModel = undefined;
     public outputField: FieldModel = undefined;
     public activeNode: NodeModel = undefined;
+    public readonly selectedNodes = new Array<NodeModel>();
     public readonly nodes = new Array<NodeModel>();
     public readonly arrays = new Array<NodeModel>();
     public readonly templates = new Array<MetaNodeModel>();
@@ -16,26 +17,30 @@ export class BlueprintModel {
     public shadowNode: NodeModel = undefined;
     constructor() {
     }
+
     public dragInput(input: FieldModel, mousePos: Position) {
         this.shadowLink = new ShadowLinkModel(new Position(input.inputX, input.inputY), mousePos);
     }
+
     public dragOutput(output: FieldModel, mousePos: Position) {
         this.shadowLink = new ShadowLinkModel(mousePos, new Position(output.outputX, output.outputY));
     }
+
     public dropLink() {
         this.shadowLink = undefined;
         this.outputField = undefined;
         this.inputField = undefined;
     }
+
     public unselectAll() {
+        console.debug("unselected!!!")
         if (this.activeNode) {
             this.activeNode.active = false;
         }
         this.activeNode = undefined;
     }
-    public setTool(node: MetaNodeModel) {
-        //this.shadowNode = node.add();
-    }
+
+
     public select(node: NodeModel) {
         this.activeNode = node;
         this.activeNode.active = true;
@@ -62,8 +67,6 @@ export class BlueprintModel {
     }
 
     public addItem(input: FieldModel, output: FieldModel, index: number) {
-        if (input.group.inputBehavior != "appender")
-            debugger;
         const newfield = input.group.addItem(index);
         this.addLink(newfield, output);
     }
@@ -71,26 +74,27 @@ export class BlueprintModel {
     public resetInput(field: FieldModel) {
         field.inputLink = undefined;
     }
-    public addInput(node: NodeModel, field: FieldModel) {
-        //node.inputs.push(field);
-    }
+
     public getMetaModel(type: string): MetaNodeModel {
         const template = this.templates.filter(x => x.name == type);
         //TODO check
         return template[0];
     }
+
     public getNodeModel(source: any): NodeModel {
         const node = this.nodes.filter(x => x.title == source);
         //TODO check
         return node[0];
     }
-    public deleteSelected():void{
-        if(this.activeNode != undefined){
+
+    public deleteSelected(): void {
+        if (this.activeNode != undefined) {
             this.deleteNode(this.activeNode);
             this.activeNode = undefined;
         }
     }
-    public deleteNode(node:NodeModel) : void {
+
+    public deleteNode(node: NodeModel): void {
         node.delete();
         const index = this.nodes.indexOf(node, 0);
         if (index > -1) {
