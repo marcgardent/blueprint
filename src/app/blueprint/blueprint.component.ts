@@ -14,6 +14,10 @@ import { ActiveHotkeys } from 'app/models/Hotkeys';
   styleUrls: ['./blueprint.component.scss']
 })
 export class BlueprintComponent implements OnInit {
+  @Input() public model: BlueprintModel;
+  public get nodeCounter(): number { return this.model.nodes.length; }
+  public get linkCounter(): number { return 0; }
+
   public paddingx = 0;
   public paddingy = 0;
   public scale = 1;
@@ -22,18 +26,16 @@ export class BlueprintComponent implements OnInit {
   public drag = false;
   public toolbox = false;
   public editingEnabled = false;
-
-  @Input() public model: BlueprintModel;
-
-  public get nodeCounter(): number { return this.model.nodes.length; }
-  public get linkCounter(): number { return 0; }
+  public multiSelectControl = false;
 
   public downControl = 0;
   public upControl = 0;
   public leftControl = 0;
   public rightControl = 0;
-  private velocity = new Position(0, 0);
   public toolboxPosition = new Position(0, 0);
+
+  private velocity = new Position(0, 0);
+  private pixelrate = 500 / 1000; /* pixel/ms */
 
   constructor(private gameloop: GameloopService) {
     this.gameloop.tick.subscribe((delta) => { this.tick(delta) })
@@ -45,6 +47,9 @@ export class BlueprintComponent implements OnInit {
 
   @HostListener('document:keyup', ['$event'])
   keyUpEvent(event: KeyboardEvent) {
+
+    this.multiSelectControl = event.shiftKey;
+
     if (event.defaultPrevented || this.editingEnabled) {
       return;
     }
@@ -62,6 +67,8 @@ export class BlueprintComponent implements OnInit {
     }
     else if (event.key == ActiveHotkeys.RIGHT) {
       this.rightControl = 0;
+    } else if (event.key == ActiveHotkeys.UNSELECT) {
+      this.model.deleteSelected();
     }
     else {
       return;
@@ -73,7 +80,9 @@ export class BlueprintComponent implements OnInit {
 
   @HostListener('document:keydown', ['$event'])
   keyDownEvent(event: KeyboardEvent) {
-    console.debug("key:", event.key);
+    
+    this.multiSelectControl = event.shiftKey;
+
     if (event.defaultPrevented || this.editingEnabled) {
       return;
     }
@@ -88,6 +97,8 @@ export class BlueprintComponent implements OnInit {
     }
     else if (event.key == ActiveHotkeys.RIGHT) {
       this.rightControl = 1;
+    } else if (event.key == ActiveHotkeys.MENU) {
+      this.showToolBox();
     }
     else {
       return;
@@ -97,25 +108,6 @@ export class BlueprintComponent implements OnInit {
     event.preventDefault();
   }
 
-
-  @HostListener('document:keydown.a', ['$event'])
-  public onClick() {
-
-  }
-
-  @HostListener('document:keydown.delete', ['$event'])
-  public onDelete() {
-    this.model.deleteSelected();
-  }
-
-  @HostListener('document:keydown.f1', ['$event'])
-  public onToolbox($event: KeyboardEvent): void {
-    this.toolboxPosition.x = this.model.mouseBlueprint.x;
-    this.toolboxPosition.y = this.model.mouseBlueprint.y;
-    this.toolbox = !this.toolbox;
-    event.stopPropagation();
-    event.preventDefault();
-  }
 
 
   @HostListener('window:wheel', ['$event'])
@@ -144,7 +136,6 @@ export class BlueprintComponent implements OnInit {
     this.drag = $event.buttons == 1;
   }
 
-
   @HostListener('mousemove', ['$event'])
   onMouseMove($event: MouseEvent) {
     this.setMouse($event.clientX, $event.clientY)
@@ -165,6 +156,12 @@ export class BlueprintComponent implements OnInit {
     }
   }
 
+  private showToolBox(): void {
+    this.toolboxPosition.x = this.model.mouseBlueprint.x;
+    this.toolboxPosition.y = this.model.mouseBlueprint.y;
+    this.toolbox = !this.toolbox;
+  }
+
   private setMouse(x, y) {
     this.mouse.x = x;
     this.mouse.y = y;
@@ -179,7 +176,6 @@ export class BlueprintComponent implements OnInit {
     return (y - this.paddingy) / this.scale;
   }
 
-  private pixelrate = 500 / 1000; /* pixel/ms */
   private tick(delta: number) {
     // acceleration
     const accX = this.leftControl - this.rightControl;

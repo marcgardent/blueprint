@@ -1,11 +1,11 @@
 
 export class AzertyHotkeys {
 
-    LEFT ="q";
-    RIGHT ="d";
-    UP  = "z";
+    LEFT = "q";
+    RIGHT = "d";
+    UP = "z";
     DOWN = "s";
-    MENU = "F1";
+    MENU = " ";
     RESET_TRANSFORMATIONS = "0";
     ZOOM_IN = "PageUp";
     ZOOM_OUT = "PageDown";
@@ -13,6 +13,7 @@ export class AzertyHotkeys {
     EDIT_NODE = "F2";
     EDIT_GROUP = "Tab";
     UNSELECT = "Escape";
+    MULTI_SELECT = "Shift";
 }
 
 export const ActiveHotkeys = new AzertyHotkeys()

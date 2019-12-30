@@ -18,10 +18,10 @@ export class NodeComponent implements OnInit {
   ngOnInit() {
     
   }
+  
   public onClick($event: MouseEvent) {
     this.context.unselectAll();
-    this.context.select(this.model);
-
+    this.context.active(this.model);
     //$event.stopPropagation();
   }
 

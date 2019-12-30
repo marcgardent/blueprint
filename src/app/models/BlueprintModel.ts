@@ -41,26 +41,33 @@ export class BlueprintModel {
     }
 
 
-    public select(node: NodeModel) {
-        this.activeNode = node;
-        this.activeNode.active = true;
+    public active(node: NodeModel) {
+        if (this.activeNode !== node) {
+            this.activeNode = node;
+            this.activeNode.active = true;
+        }
     }
+
     public addNode(node: NodeModel) {
         this.nodes.push(node);
     }
+
     public addArray() {
         const n = new NodeModel();
         n.title = "Array";
         this.arrays.push(n);
     }
+
     public addMetaNodeModels(metanodes: Array<MetaNodeModel>) {
         this.templates.push(...metanodes);
     }
+
     public addTemplate(node: NodeModel, name: string) {
         const t = new MetaNodeModel(node, name);
         this.templates.push(t);
         return t;
     }
+
     public addLink(input: FieldModel, output: FieldModel) {
         input.setInputLink(output);
         output.setOutputLink(input);
