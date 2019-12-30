@@ -15,8 +15,8 @@
 		</pattern>
 	</defs>
 	<text x="10" y="20" font-family="Verdana" font-size="10" fill="#777">
-		Data Editor, "bring your language" - {{nodeCounter}} nodes / {{linkCounter}} links / velocity({{velocity.x}},{{velocity.y}})
-		/ drag({{drag}})
+		Data Editor, "bring your language" - {{nodeCounter}} nodes / {{linkCounter}} links / drag({{drag}})
+		multi-selection({{multiSelectControl}}) / selected({{selectedCounter}})
 	</text>
 
 	<g [attr.transform]="'translate('+ paddingx + ' ' + paddingy+ ') ' + 'scale('+ scale + ')' ">
@@ -25,7 +25,7 @@
 
 		<!-- Nodes -->
 		<g *ngFor="let node of model.nodes">
-			<g app-node [model]="node" [context]="model" (onEditing)="nodeEditing()" (onEdited)="nodeEdited()" />
+			<g app-node [model]="node" [context]="model" [multiSelection]="multiSelectControl" (onEditing)="nodeEditing()" (onEdited)="nodeEdited()" />
 		</g>
 		<g *ngIf="model.shadowLink">
 			<path [attr.d]="model.shadowLink.curvePath" stroke="yellow" fill="none" />

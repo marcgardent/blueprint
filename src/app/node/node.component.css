@@ -17,9 +17,14 @@
   padding-right: 5px;
 }
 
+.node.selected {
+  border-color: yellow;
+}
+
 .node.active {
   border-color:orange;
 }
+
 
 .block {
   padding:3px;

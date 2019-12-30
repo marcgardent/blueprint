@@ -32,20 +32,35 @@ export class BlueprintModel {
         this.inputField = undefined;
     }
 
-    public unselectAll() {
-        console.debug("unselected!!!")
+    private unactive() {
         if (this.activeNode) {
             this.activeNode.active = false;
         }
         this.activeNode = undefined;
     }
 
+    private select(node:NodeModel) {
+        if(this.selectedNodes.findIndex(x=> x===node)<0){
+            this.selectedNodes.push(node);
+            node.selected = true;
+        }
+    }
+
+    public unselectAll(){
+        const nodes = this.selectedNodes.splice(0,this.selectedNodes.length);
+        for(let n of nodes){
+            n.selected = false;
+        }
+        this.unactive();
+    }
 
     public active(node: NodeModel) {
+        this.unactive();
         if (this.activeNode !== node) {
             this.activeNode = node;
             this.activeNode.active = true;
         }
+        this.select(node);
     }
 
     public addNode(node: NodeModel) {

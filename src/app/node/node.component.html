@@ -1,6 +1,6 @@
 <svg:foreignObject [attr.x]="model.box.x" [attr.y]="model.box.y" [attr.width]="model.box.width" [attr.height]="model.box.height"
  (mousedown)="onClick($event)">
-	<xhtml:div [ngClass]="{'noselect':true, 'node': true, 'active': model.active}">
+	<xhtml:div [ngClass]="{'node': true, 'active': model.active, 'selected': model.selected}">
 		<div class="block title">
 			<!--<input  *ngIf="model.active" [(ngModel)]="model.title" placeholder="title" />
     <span *ngIf="!model.active">{{model.title}}</span>-->

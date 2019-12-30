@@ -8,6 +8,7 @@ import { NodeModel } from "../models/NodeModel";
 })
 export class NodeComponent implements OnInit {
 
+  @Input() multiSelection = false;
   @Input() model = new NodeModel();
   @Input() context = new BlueprintModel();
   @Output() onEditing = new EventEmitter<void>();
@@ -20,9 +21,12 @@ export class NodeComponent implements OnInit {
   }
   
   public onClick($event: MouseEvent) {
-    this.context.unselectAll();
+    
+    if(!this.multiSelection){
+      this.context.unselectAll();
+    }
     this.context.active(this.model);
-    //$event.stopPropagation();
+    $event.preventDefault();
   }
 
   public editing(){

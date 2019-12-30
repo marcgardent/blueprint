@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input  } from '@angular/core';
 import { BlueprintModel } from "../models/BlueprintModel";
 import { FieldModel } from "../models/FieldModel";
 
@@ -35,11 +35,11 @@ export class FieldComponent implements OnInit {
       this.context.resetInput(this.model);
       this.context.dragOutput(this.context.outputField, this.context.mouseBlueprint);
     }
-    this.context.unselectAll();
+    //todo why? this.context.unactive();
     $event.stopPropagation();
   }
 
-  public onDropInput($event: MouseEvent) {
+  public onDropInput() {
     if (this.context.outputField) {
       this.context.addLink(this.model, this.context.outputField);
     }
@@ -54,13 +54,13 @@ export class FieldComponent implements OnInit {
     this.onDragInput($event);
   }
 
-  public onDropArray($event: MouseEvent) {
+  public onDropArray() {
     if (this.context.outputField) {
       this.context.addLink(this.model, this.context.outputField);
     }
   }
 
-  public onDropInter($event:MouseEvent) {
+  public onDropInter() {
     if (this.context.outputField) {
       this.context.addItem(this.model, this.context.outputField, this.position);
     }
@@ -69,12 +69,12 @@ export class FieldComponent implements OnInit {
   public onDragOutput($event: MouseEvent) {
     this.context.outputField = this.model;
     this.context.dragOutput(this.model, this.context.mouseBlueprint);
-    this.context.unselectAll();
+    //todo ???? this.context.unactive();
     $event.stopPropagation();
   }
 
 
-  public onDropOutput($event: MouseEvent) {
+  public onDropOutput() {
     if (this.context.inputField) {
       this.context.addLink(this.context.inputField, this.model);
     }

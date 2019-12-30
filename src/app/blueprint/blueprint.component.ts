@@ -1,9 +1,6 @@
 import { Component, OnInit, HostListener, Input } from '@angular/core';
-import { NodeComponent } from '../node/node.component'
 import { BlueprintModel } from "../models/BlueprintModel";
-import { FieldModel } from "../models/FieldModel";
 import { MetaNodeModel } from "../models/MetaNodeModel";
-import { NodeModel } from "../models/NodeModel";
 import { Position } from "../models/Position";
 import { GameloopService } from '../gameloop.service'
 import { ActiveHotkeys } from 'app/models/Hotkeys';
@@ -17,6 +14,7 @@ export class BlueprintComponent implements OnInit {
   @Input() public model: BlueprintModel;
   public get nodeCounter(): number { return this.model.nodes.length; }
   public get linkCounter(): number { return 0; }
+  public get selectedCounter(): number { return this.model.selectedNodes.length; }
 
   public paddingx = 0;
   public paddingy = 0;
@@ -35,7 +33,6 @@ export class BlueprintComponent implements OnInit {
   public toolboxPosition = new Position(0, 0);
 
   private velocity = new Position(0, 0);
-  private pixelrate = 500 / 1000; /* pixel/ms */
 
   constructor(private gameloop: GameloopService) {
     this.gameloop.tick.subscribe((delta) => { this.tick(delta) })
@@ -107,8 +104,6 @@ export class BlueprintComponent implements OnInit {
     event.stopPropagation();
     event.preventDefault();
   }
-
-
 
   @HostListener('window:wheel', ['$event'])
   onScroll($event: WheelEvent) {
