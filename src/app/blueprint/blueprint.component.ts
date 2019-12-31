@@ -159,7 +159,7 @@ export class BlueprintComponent implements OnInit {
     this.toolbox = !this.toolbox;
   }
 
-  private setMouse(x, y) {
+  private setMouse(x:number, y:number) {
     this.mouse.x = x;
     this.mouse.y = y;
     this.updateLogicMouse();
