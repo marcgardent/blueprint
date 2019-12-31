@@ -15,10 +15,11 @@
   white-space:nowrap;
   padding-left : 5px;
   padding-right: 5px;
+  user-select: none;
 }
 
 .node.selected {
-  border-color: yellow;
+  border-color: orangered;
 }
 
 .node.active {
@@ -49,7 +50,7 @@
 .title{
    font-size: 12px;
    font-weight: bold;
-   background-color:rgb(34, 34, 34);
+   background-color:rgb(34, 34, 34);  
 }
 
 .form {

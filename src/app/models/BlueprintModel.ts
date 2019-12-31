@@ -5,6 +5,7 @@ import { FieldModel } from './FieldModel';
 import { ShadowLinkModel } from './ShadowLinkModel';
 
 export class BlueprintModel {
+
     public mouseBlueprint: Position = new Position();
     public inputField: FieldModel = undefined;
     public outputField: FieldModel = undefined;
@@ -39,16 +40,16 @@ export class BlueprintModel {
         this.activeNode = undefined;
     }
 
-    private select(node:NodeModel) {
-        if(this.selectedNodes.findIndex(x=> x===node)<0){
+    private select(node: NodeModel) {
+        if (this.selectedNodes.findIndex(x => x === node) < 0) {
             this.selectedNodes.push(node);
             node.selected = true;
         }
     }
 
-    public unselectAll(){
-        const nodes = this.selectedNodes.splice(0,this.selectedNodes.length);
-        for(let n of nodes){
+    public unselectAll() {
+        const nodes = this.selectedNodes.splice(0, this.selectedNodes.length);
+        for (let n of nodes) {
             n.selected = false;
         }
         this.unactive();
@@ -121,6 +122,14 @@ export class BlueprintModel {
         const index = this.nodes.indexOf(node, 0);
         if (index > -1) {
             this.nodes.splice(index, 1);
+        }
+    }
+
+    public moveSelected(dx: number, dy: number): void {
+        if (dx != dy && dx != 0) {
+            for (let n of this.selectedNodes) {
+                n.box.move(dx, dy);
+            }
         }
     }
 }

@@ -138,17 +138,19 @@ export class BlueprintComponent implements OnInit {
     const deltaY = $event.movementY / window.devicePixelRatio;
 
     if ($event.buttons == 2 || $event.buttons == 4) {
-      // move workspace
+      // move workspace // Todo perf? : move to tick()
       this.paddingx += deltaX;
       this.paddingy += deltaY;
-      $event.preventDefault()
-      $event.stopPropagation()
     }
     else if ($event.buttons == 1 && this.model.activeNode && !this.model.shadowLink) {
-      // move node
-      this.model.activeNode.box.x += deltaX
-      this.model.activeNode.box.y += deltaY
+      this.model.moveSelected(deltaX, deltaY); // Todo perf? : move to tick()
     }
+    else {
+      return;
+    }
+    
+    $event.preventDefault();
+    $event.stopPropagation();
   }
 
   private showToolBox(): void {
@@ -188,11 +190,6 @@ export class BlueprintComponent implements OnInit {
     this.paddingx += this.velocity.x;
     this.updateLogicMouse();
 
-    if (this.drag && this.model.activeNode && !this.model.shadowLink) {
-      // move node
-      this.model.activeNode.box.x -= this.velocity.x / this.scale;
-      this.model.activeNode.box.y -= this.velocity.y / this.scale;
-    }
   }
 
   public updateLogicMouse() {

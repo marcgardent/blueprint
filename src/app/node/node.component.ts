@@ -22,11 +22,11 @@ export class NodeComponent implements OnInit {
   
   public onClick($event: MouseEvent) {
     
-    if(!this.multiSelection){
+    if(!this.multiSelection && !this.model.selected){
       this.context.unselectAll();
     }
+
     this.context.active(this.model);
-    $event.preventDefault();
   }
 
   public editing(){
