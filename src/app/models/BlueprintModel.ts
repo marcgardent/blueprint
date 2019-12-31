@@ -4,8 +4,17 @@ import { MetaNodeModel } from './MetaNodeModel';
 import { FieldModel } from './FieldModel';
 import { ShadowLinkModel } from './ShadowLinkModel';
 
-export class BlueprintModel {
+export class PadModel {
+    public collection = new Array<BlueprintModel>();
+    public active : BlueprintModel = undefined;    
+    public addBlueprint(b : BlueprintModel){
+        this.collection.push(b);
+    }
+    
+}
 
+export class BlueprintModel {
+    public title: string = ""
     public mouseBlueprint: Position = new Position();
     public inputField: FieldModel = undefined;
     public outputField: FieldModel = undefined;
@@ -13,10 +22,12 @@ export class BlueprintModel {
     public readonly selectedNodes = new Array<NodeModel>();
     public readonly nodes = new Array<NodeModel>();
     public readonly arrays = new Array<NodeModel>();
-    public readonly templates = new Array<MetaNodeModel>();
+    public readonly metaNodes = new Array<MetaNodeModel>();
     public shadowLink: ShadowLinkModel = undefined;
     public shadowNode: NodeModel = undefined;
+    
     constructor() {
+
     }
 
     public dragInput(input: FieldModel, mousePos: Position) {
@@ -75,12 +86,12 @@ export class BlueprintModel {
     }
 
     public addMetaNodeModels(metanodes: Array<MetaNodeModel>) {
-        this.templates.push(...metanodes);
+        this.metaNodes.push(...metanodes);
     }
 
     public addTemplate(node: NodeModel, name: string) {
         const t = new MetaNodeModel(node, name);
-        this.templates.push(t);
+        this.metaNodes.push(t);
         return t;
     }
 
@@ -99,7 +110,7 @@ export class BlueprintModel {
     }
 
     public getMetaModel(type: string): MetaNodeModel {
-        const template = this.templates.filter(x => x.name == type);
+        const template = this.metaNodes.filter(x => x.name == type);
         //TODO check
         return template[0];
     }

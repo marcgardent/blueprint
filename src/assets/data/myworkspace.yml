@@ -6,7 +6,7 @@ imports:
 instances:
     #group_01:
     #    position: {x: 200, y: 200}
-    #    type: templates(my_group_01)
+    #    type: blueprints(my_group_01)
 
     scalar_string_1:
         position: {x: 10,  y: 10}
