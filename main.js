@@ -13,7 +13,7 @@ function createWindow() {
       nodeIntegration: true
     }
   })
-  
+  /*
   mainWindow.loadURL(
     url.format({
       pathname: path.join(__dirname, `/dist/index.html`),
@@ -21,14 +21,13 @@ function createWindow() {
       slashes: true
     })
   );
-  /*
-  mainWindow.loadURL(
-    "http://localhost:4200"
-  );
   */
+  mainWindow.loadURL(
+    "http://localhost:4200" //[DEBUG WITH VSCODE] use angular's endpoint
+  );
  
-  1// Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  // Open the DevTools.
+  //mainWindow.webContents.openDevTools() //[DEBUG WITH VSCODE] the VS debugger attach to devtools and not to the page!
 
   mainWindow.on('closed', function () {
     mainWindow = null

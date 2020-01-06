@@ -28,7 +28,15 @@
                 "${workspaceRoot}/main.js",
                 "--remote-debugging-port=9222"
             ],
-            "webRoot": "${workspaceRoot}"
+            // "trace": "verbose", // to debug the debugger
+            "webRoot": "${workspaceRoot}/dist/",    // [DEBUG WITH VSCODE] debugger detects the electron's main.js rather than the angular's main.js!
+            "sourceMapPathOverrides": {             // [DEBUG WITH VSCODE] And so replace webRoot with workspaceRoot to find *.ts files
+                "webpack:///./*": "${workspaceRoot}/*", 
+                "webpack:///src/*": "${workspaceRoot}/*",
+                "webpack:///*": "*",
+                "webpack:///./~/*": "${workspaceRoot}/node_modules/*",
+                "meteor://💻app/*": "${workspaceRoot}/*"
+            }
         }
     ]
 }
