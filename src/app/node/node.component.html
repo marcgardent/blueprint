@@ -4,7 +4,7 @@
 		<div class="block title">
 			<!--<input  *ngIf="model.active" [(ngModel)]="model.title" placeholder="title" />
     <span *ngIf="!model.active">{{model.title}}</span>-->
-			<span>{{active}} {{model.title}}</span>
+			<span>{{model.title}}</span>
     </div>
     <ng-container *ngFor="let field of model.fields" >
       <div *ngIf="field.formBehavior=='none'"  [ngClass]="{'block':true, 'output': field.outputBehavior!='none' }">

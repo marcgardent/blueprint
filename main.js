@@ -22,9 +22,11 @@ function createWindow() {
     })
   );
   */
+ 
   mainWindow.loadURL(
     "http://localhost:4200" //[DEBUG WITH VSCODE] use angular's endpoint
   );
+  
  
   // Open the DevTools.
   //mainWindow.webContents.openDevTools() //[DEBUG WITH VSCODE] the VS debugger attach to devtools and not to the page!

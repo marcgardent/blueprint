@@ -64,7 +64,7 @@ export class BlueprintComponent implements OnInit {
     }
     else if (event.key == ActiveHotkeys.RIGHT) {
       this.rightControl = 0;
-    } else if (event.key == ActiveHotkeys.UNSELECT) {
+    } else if (event.key == ActiveHotkeys.DELETE_NODE) {
       this.model.deleteSelected();
     }
     else {

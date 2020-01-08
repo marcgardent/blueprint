@@ -3,7 +3,7 @@
 	<foreignObject [attr.x]="x" [attr.y]="y" [attr.width]="200" [attr.height]="500" fill="black">
 		<xhtml:div class="root">
       <h1>Toolbox</h1>
-      <div *ngFor="let template of context.templates">
+      <div *ngFor="let template of context.metaNodes">
         <button (click)="createInstance(template)">{{template.name}}</button>
       </div>
 		</xhtml:div>

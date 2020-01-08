@@ -1,129 +1,129 @@
- 
+ #titlebar {
+   display: block;
+   position: fixed;
+   height: 32px;
+   width: calc(100% - 2px);
+   background-color: #444;
+   user-select: none;
+ }
 
-#titlebar {
-  display: block;
-  position: fixed;
-  height: 32px;
-  width: calc(100% - 2px);
-  background-color: black;
-  user-select: none;
-}
+ .maximized #titlebar {
+   width: 100%;
+   padding: 0;
+ }
 
-.maximized #titlebar {
-  width: 100%;
-  padding: 0;
-}
+ #main {
+   height: calc(100% - 32px);
+   margin-top: 32px;
+   padding: 20px;
+   overflow-y: auto;
+ }
 
-#main {
-  height: calc(100% - 32px);
-  margin-top: 32px;
-  padding: 20px;
-  overflow-y: auto;
-}
+ #titlebar {
+   padding: 4px;
+ }
 
-#titlebar {
-  padding: 4px;
-}
+ #titlebar #drag-region {
+   width: 100%;
+   height: 100%;
+   -webkit-app-region: drag;
+ }
 
-#titlebar #drag-region {
-  width: 100%;
-  height: 100%;
-  -webkit-app-region: drag;
-}
+ #titlebar {
+   color: #999;
+ }
 
-#titlebar {
-  color: #FFF;
-}
+ #titlebar #drag-region {
+   display: grid;
+   grid-template-columns: auto 138px;
+ }
 
-#titlebar #drag-region {
-  display: grid;
-  grid-template-columns: auto 138px;
-}
+ #window-title {
+   grid-column: 1;
+   display: flex;
+   align-items: center;
+   margin-left: 8px;
+   overflow-x: hidden;
+   font-family: "Segoe UI", sans-serif;
+   font-size: 12px;
+ }
 
-#window-title {
-  grid-column: 1;
-  display: flex;
-  align-items: center;
-  margin-left: 8px;
-  overflow-x: hidden;
-  font-family: "Segoe UI", sans-serif;
-  font-size: 12px;
-}
+ .maximized #window-title {
+   margin-left: 12px;
+ }
 
-.maximized #window-title {
-  margin-left: 12px;
-}
+ #window-title span {
+   overflow: hidden;
+   text-overflow: ellipsis;
+   line-height: 1.5;
+ }
 
-#window-title span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 1.5;
-}
+ #window-controls {
+   display: grid;
+   grid-template-columns: repeat(3, 46px);
+   position: absolute;
+   top: 0;
+   right: 0;
+   height: 100%;
+   font-family: "Segoe MDL2 Assets";
+   font-size: 10px;
+ }
 
-#window-controls {
-  display: grid;
-  grid-template-columns: repeat(3, 46px);
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 100%;
-  font-family: "Segoe MDL2 Assets";
-  font-size: 10px;
-}
+ #window-controls {
+   -webkit-app-region: no-drag;
+ }
 
-#window-controls {
-  -webkit-app-region: no-drag;
-}
+ #window-controls .button {
+   grid-row: 1 / span 1;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 100%;
+   height: 100%;
+ }
 
-#window-controls .button {
-  grid-row: 1 / span 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-}
+ #window-controls .button {
+   user-select: none;
+   cursor: default;
+ }
 
-#window-controls .button {
-  user-select: none;
-  cursor: default;
-}
+ #window-controls .button:hover {
+   background: rgba(255, 255, 255, 0.1);
+ }
 
-#window-controls .button:hover {
-  background: rgba(255,255,255,0.1);
-}
+ #window-controls .button:active {
+   background: rgba(255, 255, 255, 0.2);
+ }
 
-#window-controls .button:active {
-  background: rgba(255,255,255,0.2);
-}
+ #close-button:hover {
+   background: #E81123 !important;
+ }
 
-#close-button:hover {
-  background: #E81123 !important;
-}
+ #close-button:active {
+   background: #f1707a !important;
+   color: #000;
+ }
 
-#close-button:active {
-  background: #f1707a !important;
-  color: #000;
-}
+ #min-button {
+   grid-column: 1;
+ }
 
-#min-button {
-  grid-column: 1;
-}
-#max-button, #restore-button {
-  grid-column: 2;
-}
-#close-button {
-  grid-column: 3;
-}
+ #max-button, #restore-button {
+   grid-column: 2;
+ }
 
-#restore-button {
-  display: none !important;
-}
+ #close-button {
+   grid-column: 3;
+ }
 
-.maximized #restore-button {
-  display: flex !important;
-}
+ #restore-button {
+   display: none !important;
+ }
 
-.maximized #max-button {
-  display: none;
-}
+ .maximized #restore-button {
+   display: flex !important;
+ }
+
+ .maximized #max-button {
+   display: none;
+ }

@@ -14,6 +14,7 @@ export class AzertyHotkeys {
     EDIT_GROUP = "Tab";
     UNSELECT = "Escape";
     MULTI_SELECT = "Shift";
+    DELETE_NODE = "Backspace"
 }
 
 export const ActiveHotkeys = new AzertyHotkeys()
