@@ -39,23 +39,4 @@ export class AppComponent implements OnInit  {
   }
   
 
-  public get isMaximized() : boolean{
-    return this.electronWindow ? this.electronWindow.isMaximized() : false;
-  }
-
-  public minimize(){
-    this.electronWindow.minimize();
-  }
-    
-  public maximize(){
-    this.electronWindow.maximize();
-  }
-
-  public unmaximize(){
-    this.electronWindow.unmaximize();
-  }
-
-  public close(){
-    this.electronWindow.close();
-  }
 }

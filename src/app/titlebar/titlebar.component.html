@@ -1,0 +1,24 @@
+<header id="titlebar">
+    <div id="drag-region" [ngClass]="{'maximized':isMaximized }">
+  
+      <div id="window-title">
+        <span>blueprint editor</span>
+      </div>
+  
+      <div id="window-controls">
+        <div class="button" (click)="minimize()" id="min-button">
+          <span>🗕</span>
+        </div>
+        <div class="button" (click)="maximize()" id="max-button">
+          <span>🗖</span>
+        </div>
+        <div class="button" (click)="unmaximize()" id="restore-button">
+          <span>🗗</span>
+        </div>
+        <div class="button" (click)="close()" id="close-button">
+          <span>🗙</span>
+        </div>
+  
+      </div>
+    </div>
+  </header>

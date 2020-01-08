@@ -10,10 +10,11 @@ import { GameloopService } from './gameloop.service';
 import { ToolboxComponent } from './toolbox/toolbox.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxElectronModule } from 'ngx-electron';
+import { TitlebarComponent } from './titlebar/titlebar.component';
 
 @NgModule({
   imports:      [ BrowserModule, FormsModule, NgxElectronModule, HttpClientModule ],
-  declarations: [ AppComponent, BlueprintComponent, NodeComponent, FieldComponent, ToolboxComponent],
+  declarations: [ AppComponent, BlueprintComponent, NodeComponent, FieldComponent, ToolboxComponent, TitlebarComponent],
   bootstrap:    [ AppComponent ],
   providers: [GameloopService]
 })
