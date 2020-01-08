@@ -4,12 +4,15 @@
 
 ![screen](doc/svg-node-editor.gif)
 
+Features:
+* Toolbox (imported from generic format)
+
 Wishlist: 
 
-* Toolbox
 * Create/edit node groups
+* Export engine
 * multi-users with backend-server
 
-## Run/Edit online 
+## TODO
 
-[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/angular6-blueprint-automation)
+* publish app: https://medium.com/@johndyer24/creating-and-deploying-an-auto-updating-electron-app-for-mac-and-windows-using-electron-builder-6a3982c0cee6

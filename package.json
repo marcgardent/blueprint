@@ -1,5 +1,9 @@
 {
-  "name": "angular",
+  "name": "blueprint",
+  "description": "node editor, code is data, data is code",
+  "author": {
+    "name": "Marc Gardent"
+  },
   "version": "0.0.0",
   "main": "main.js",
   "private": true,
@@ -13,6 +17,7 @@
     "@angular/router": "^8.2.14",
     "@types/electron": "^1.6.10",
     "core-js": "^3.6.0",
+    "electron-updater": "^4.2.0",
     "ngx-electron": "^2.2.0",
     "rxjs": "^6.3.3",
     "tslib": "^1.10.0",
@@ -50,5 +55,12 @@
     "ts-node": "~8.5.4",
     "tslint": "~5.20.1",
     "typescript": "<3.6.0"
+  },
+  "build": {
+    "win": {
+      "publish": [
+        "github"
+      ]
+    }
   }
 }
