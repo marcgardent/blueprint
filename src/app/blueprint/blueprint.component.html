@@ -14,7 +14,8 @@
 			<path d="M 500 0 L 0 0 0 500" fill="none" stroke="black" stroke-width="2" />
 		</pattern>
 	</defs>
-	<text x="10" y="60" font-family="Verdana" font-size="10" fill="#777">
+
+	<text x="10" y="10" font-family="Verdana" font-size="10" fill="#777">
 		Data Editor, "bring your language" - {{nodeCounter}} nodes / {{linkCounter}} links / drag({{drag}})
 		multi-selection({{multiSelectControl}}) / selected({{selectedCounter}})
 	</text>
@@ -45,6 +46,7 @@
 	<!--splash screen -->
 	<g *ngIf="idle">
 		<rect x="-5000" y="-5000" width="10001" height="10001" fill="black" opacity="0.7" />
+		<image x="-10" y="50" width="250" height="250" xlink:href="assets/blueprint-icon.svg" />
 		<text x="10" y="350" font-family="Verdana" font-size="50" fill="yellow">
 			Blueprint
 		</text>

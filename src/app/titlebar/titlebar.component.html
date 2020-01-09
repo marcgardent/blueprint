@@ -1,23 +1,21 @@
-<header id="titlebar">
-    <div id="drag-region" [ngClass]="{'maximized':isMaximized }">
-  
-      <div id="window-title">
-          <span>Blueprint <select><option>ss</option></select></span>
-      </div>
-      <div id="window-controls">
-        <div class="button" (click)="minimize()" id="min-button">
-          <span>🗕</span>
-        </div>
-        <div class="button" (click)="maximize()" id="max-button">
-          <span>🗖</span>
-        </div>
-        <div class="button" (click)="unmaximize()" id="restore-button">
-          <span>🗗</span>
-        </div>
-        <div class="button" (click)="close()" id="close-button">
-          <span>🗙&nbsp;&nbsp;</span>
-        </div>
-  
-      </div>
-    </div>
-  </header>
+<header id="titlebar" [ngClass]="{'maximized':isMaximized}">
+  <div id="content">
+    <img src="assets/blueprint-icon.svg" class="icon">
+    <span>
+      <select>
+        <option>workspace</option>
+        <option>group1</option>
+        <option>group2</option>
+      </select>
+    </span>
+  </div>
+  <div id="title">
+    Blueprint
+  </div>
+  <div id="window-controls">
+    <button (click)="minimize()">🗕</button>
+    <button (click)="maximize()">🗖</button>
+    <button (click)="unmaximize()" [ngClass]="{'maximized':isMaximized}">🗗</button>
+    <button class="button" (click)="close()" id="close-button">🗙</button>
+  </div>
+</header>

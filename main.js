@@ -29,7 +29,7 @@ function createWindow() {
   
  
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools() //[DEBUG WITH VSCODE] the VS debugger attach to devtools and not to the page!
+  mainWindow.webContents.openDevTools() //[DEBUG WITH VSCODE] the VS debugger attach to devtools and not to the page!
 
   mainWindow.on('closed', function () {
     mainWindow = null

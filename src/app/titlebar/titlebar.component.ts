@@ -4,7 +4,7 @@ import { ElectronService } from 'ngx-electron';
 @Component({
   selector: 'app-titlebar',
   templateUrl: './titlebar.component.html',
-  styleUrls: ['./titlebar.component.css']
+  styleUrls: ['./titlebar.component.scss']
 })
 export class TitlebarComponent implements OnInit {
   private readonly electronWindow: Electron.BrowserWindow;
