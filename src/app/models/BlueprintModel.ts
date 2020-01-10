@@ -4,15 +4,6 @@ import { MetaNodeModel } from './MetaNodeModel';
 import { FieldModel } from './FieldModel';
 import { ShadowLinkModel } from './ShadowLinkModel';
 
-export class PadModel {
-    public collection = new Array<BlueprintModel>();
-    public active : BlueprintModel = undefined;    
-    public addBlueprint(b : BlueprintModel){
-        this.collection.push(b);
-    }
-    
-}
-
 export class BlueprintModel {
     public title: string = ""
     public mouseBlueprint: Position = new Position();

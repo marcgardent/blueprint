@@ -16,7 +16,6 @@ img.icon {
   width: $unit - $padding * 2;
   height: $unit - $padding * 2;
   padding: $padding;
-
 }
 
 #content {
@@ -25,11 +24,17 @@ img.icon {
   align-items: center;
 
   select {
-    background:inherit;
+    background: inherit;
     border: 1px solid $colortext;
     height: $unit;
-    width: 150px;
+    width: 200px;
     color: $colortext;
+  }
+  select option {
+    margin: 40px;
+    background: black;
+    color: #fff;
+    line-height: $unit;
   }
 }
 

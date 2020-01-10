@@ -133,7 +133,7 @@ export class BlueprintComponent implements OnInit {
 
   @HostListener('mousemove', ['$event'])
   onMouseMove($event: MouseEvent) {
-    this.setMouse($event.clientX, $event.clientY)
+    this.setMouse($event.pageX, $event.pageY - 34)
     const deltaX = $event.movementX / window.devicePixelRatio;
     const deltaY = $event.movementY / window.devicePixelRatio;
 
@@ -197,14 +197,6 @@ export class BlueprintComponent implements OnInit {
     // update logic mouse
     this.model.mouseBlueprint.x = this.CoordBlueprintX(this.mouse.x);
     this.model.mouseBlueprint.y = this.CoordBlueprintY(this.mouse.y);
-  }
-
-  public focus() {
-    this.idle = false;
-  }
-
-  public blur() {
-    //this.idle = true;
   }
 
   public onSelectedTemplate(template: MetaNodeModel) {
