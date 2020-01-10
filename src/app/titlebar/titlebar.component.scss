@@ -1,5 +1,6 @@
-$unit: 25px;
-$padding: 4px;
+$unit: 32px;
+$padding: 6px;
+$colortext: gray;
 
 #titlebar {
   display: flex;
@@ -7,27 +8,39 @@ $padding: 4px;
   justify-content: space-between;
   height: $unit;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  
+  user-select: none;
+  color: $colortext;
 }
 
 img.icon {
   width: $unit - $padding * 2;
   height: $unit - $padding * 2;
   padding: $padding;
+
 }
 
 #content {
   flex-basis: auto;
+  display: flex;
+  align-items: center;
+
+  select {
+    background:inherit;
+    border: 1px solid $colortext;
+    height: $unit;
+    width: 150px;
+    color: $colortext;
+  }
 }
 
 #title {
   flex-grow: 1;
   -webkit-app-region: drag;
   text-align: center;
-  color: gray;
-  font-size: $unit / 2;
+  font-size: $unit / 2.5;
   padding: $padding;
 }
+
 #window-controls {
   flex-grow: 0;
   flex-basis: $unit * 3;
@@ -37,5 +50,23 @@ img.icon {
   > button {
     width: $unit;
     height: $unit;
+    background: inherit;
+    border: 0px;
+    color: $colortext;
+    line-height: $unit/2;
+    font-size: $unit/2;
+    vertical-align: middle;
+    text-align: center;
+
+    & .default:active,
+    &.default:hover {
+      background: #414141;
+    }
+
+    & .important:active,
+    &.important:hover {
+      background: #e81123;
+      color: white;
+    }
   }
 }

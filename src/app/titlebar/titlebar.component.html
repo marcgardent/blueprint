@@ -1,6 +1,8 @@
 <header id="titlebar" [ngClass]="{'maximized':isMaximized}">
   <div id="content">
-    <img src="assets/blueprint-icon.svg" class="icon">
+    <span>
+      <img src="assets/blueprint-icon.svg" class="icon">
+    </span>
     <span>
       <select>
         <option>workspace</option>
@@ -13,9 +15,9 @@
     Blueprint
   </div>
   <div id="window-controls">
-    <button (click)="minimize()">🗕</button>
-    <button (click)="maximize()">🗖</button>
-    <button (click)="unmaximize()" [ngClass]="{'maximized':isMaximized}">🗗</button>
-    <button class="button" (click)="close()" id="close-button">🗙</button>
+    <button class="default" (click)="minimize()">🗕</button>
+    <button class="default" (click)="maximize()" *ngIf="!isMaximized">🗖</button>
+    <button class="default" (click)="unmaximize()" *ngIf="isMaximized">🗗</button>
+    <button class="important" (click)="close()">🗙</button>
   </div>
 </header>
