@@ -1,0 +1,59 @@
+imports: 
+    scalars : "scalars.yml"
+    protogames : "protogame.yml"
+    
+blueprints:
+    my_group_01:
+        scalar_string_1:
+            position: {x: 10,  y: 10}
+            type: input
+
+        the_token:
+            position: {x: 300,  y: 300}
+            type: output
+            inputs:
+                self: { source: token_1, output: self }
+        
+        token_1:
+            position: {x: 300, y: 100}
+            type: Token
+            inputs:
+                symbol : "X"
+                name : "name"
+                description : { source: scalar_string_1, output: self }      
+        list_1:
+            position:  {x: 600, y: 100}
+            type: List
+            inputs:
+                content:
+                    - {source: token_1, output: self }
+                    - {source: token_1, output: self }
+                    - {source: token_1, output: self }
+    
+    myworkspace:
+        #group_01:
+        #    position: {x: 200, y: 200}
+        #    type: blueprints(my_group_01)
+
+        scalar_string_1:
+            position: {x: 10,  y: 10}
+            type: String        
+            inputs:
+                text : "My description in scalar"
+        
+        token_1:
+            position: {x: 300, y: 100}
+            type: Token
+            inputs:
+                symbol : "X"
+                name : "name"
+                description : { source: scalar_string_1, output: self }
+
+        list_1:
+            position:  {x: 600, y: 100}
+            type: List
+            inputs:
+                content:
+                    - {source: token_1, output: self }
+                    - {source: token_1, output: self }
+                    - {source: token_1, output: self }     

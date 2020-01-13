@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
+import { PadModel } from 'app/models/PadModel';
 
 @Component({
   selector: 'app-titlebar',
@@ -8,12 +9,14 @@ import { ElectronService } from 'ngx-electron';
 })
 export class TitlebarComponent implements OnInit {
   private readonly electronWindow: Electron.BrowserWindow;
-  
+  @Input() public model : PadModel;
+
   constructor(private readonly electronService: ElectronService) {
     this.electronWindow = this.electronService.remote.getCurrentWindow();
   }
 
   ngOnInit() {
+    
   }
 
 

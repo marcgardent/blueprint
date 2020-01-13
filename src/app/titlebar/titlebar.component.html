@@ -4,10 +4,8 @@
       <img src="assets/blueprint-icon.svg" class="icon" >
     </span>
     <span>
-      <select  tabindex="-1">
-        <option>workspace</option>
-        <option>group1</option>
-        <option>group2</option>
+      <select *ngIf="model && model.active" [(ngModel)]="model.active" tabindex="-1">
+        <option *ngFor="let c of model.collection" [ngValue]="c">{{c.title}}</option>
       </select>
     </span>
   </div>

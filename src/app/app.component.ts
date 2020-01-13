@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import YAML from 'yaml'
 
-
 import { BlueprintModel } from "./models/BlueprintModel";
 import { StandardFormatReader } from './io/readers/project';
 import { ElectronService } from 'ngx-electron';
+import { PadModel } from './models/PadModel';
+
 
 @Component({
   selector: 'my-app',
@@ -14,7 +15,7 @@ import { ElectronService } from 'ngx-electron';
 })
 export class AppComponent implements OnInit  {
 
-  public context: BlueprintModel;
+  public context: PadModel;
   private readonly electronWindow: Electron.BrowserWindow;
   private readonly fs: any;
   
@@ -25,11 +26,11 @@ export class AppComponent implements OnInit  {
   }
 
   ngOnInit(): void {
-    this.context = new BlueprintModel();
+    this.context = new PadModel();
 
     const self=this;
     const reader = new StandardFormatReader((x)=>self.FileSystemLoader(x), this.context);
-    reader.loadProject(this.context, "myworkspace.yml");
+    reader.loadProject("multi-workspace.yml");
   }
 
   async FileSystemLoader(ref:string): Promise<any>{
@@ -38,7 +39,6 @@ export class AppComponent implements OnInit  {
     json.__file__ = ref;
     return json;
   }
-  
 
   async httpClientLoader(ref:string): Promise<any>{
     const data = await this.httpClient.get("assets/data/"+ ref, {responseType: 'text'}).toPromise();
@@ -46,6 +46,4 @@ export class AppComponent implements OnInit  {
     json.__file__ = ref;
     return json;
   }
-  
-
 }

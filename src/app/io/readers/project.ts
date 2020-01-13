@@ -1,6 +1,7 @@
 import { BlueprintModel } from "app/models/BlueprintModel";
 import { loadMetaModels } from './definitions';
 import { InstanceBUilder } from './instances';
+import { PadModel } from 'app/models/PadModel';
 
 export interface Iloader {
     (ref: string): Promise<any>;
@@ -8,17 +9,21 @@ export interface Iloader {
 
 export class StandardFormatReader {
 
-    public constructor(private readonly loader: Iloader, private readonly context: BlueprintModel) {
+    public constructor(private readonly loader: Iloader, private readonly context: PadModel) {
 
     }
 
-    public async loadProject(context: BlueprintModel, ref: string): Promise<any> {
+    public async loadProject(ref: string): Promise<any> {
         const project = await this.loader(ref);
         const json = await this.applyImports(project);
-        context.addMetaNodeModels(loadMetaModels(json.definitions));
-        if ('instances' in json) {
-            const inst = new InstanceBUilder(context);
-            inst.load(json.instances);
+        this.context.addMetaNodeModels(loadMetaModels(json.definitions));
+        console.debug("definitions loaded", this.context.metaNodes);
+        if ('blueprints' in json) {
+            for(let blueprintTitle in json.blueprints) {
+                const blueprint = this.context.addBlueprint(blueprintTitle);
+                const inst = new InstanceBUilder(this.context, blueprint);
+                inst.load(json.blueprints[blueprintTitle]);
+            }
         }
     }
 
@@ -29,7 +34,7 @@ export class StandardFormatReader {
                 const dep = await this.loadDependency(imports[k]);
                 json = {
                     definitions: this.merge(dep, json, 'definitions'),
-                    instances: this.merge(dep, json, 'instances')
+                    blueprints: this.merge(dep, json, 'blueprints')
                 }
             }
             return json;

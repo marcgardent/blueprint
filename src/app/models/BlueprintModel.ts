@@ -13,7 +13,6 @@ export class BlueprintModel {
     public readonly selectedNodes = new Array<NodeModel>();
     public readonly nodes = new Array<NodeModel>();
     public readonly arrays = new Array<NodeModel>();
-    public readonly metaNodes = new Array<MetaNodeModel>();
     public shadowLink: ShadowLinkModel = undefined;
     public shadowNode: NodeModel = undefined;
     
@@ -76,15 +75,7 @@ export class BlueprintModel {
         this.arrays.push(n);
     }
 
-    public addMetaNodeModels(metanodes: Array<MetaNodeModel>) {
-        this.metaNodes.push(...metanodes);
-    }
 
-    public addTemplate(node: NodeModel, name: string) {
-        const t = new MetaNodeModel(node, name);
-        this.metaNodes.push(t);
-        return t;
-    }
 
     public addLink(input: FieldModel, output: FieldModel) {
         input.setInputLink(output);
@@ -100,16 +91,9 @@ export class BlueprintModel {
         field.inputLink = undefined;
     }
 
-    public getMetaModel(type: string): MetaNodeModel {
-        const template = this.metaNodes.filter(x => x.name == type);
-        //TODO check
-        return template[0];
-    }
-
     public getNodeModel(source: any): NodeModel {
         const node = this.nodes.filter(x => x.title == source);
-        //TODO check
-        return node[0];
+        return node.length==1 ?node[0] : null;
     }
 
     public deleteSelected(): void {
