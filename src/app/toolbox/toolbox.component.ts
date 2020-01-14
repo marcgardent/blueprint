@@ -2,6 +2,7 @@ import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { BlueprintModel } from "../models/BlueprintModel";
 import { MetaNodeModel } from "../models/MetaNodeModel";
 import { NodeModel } from "../models/NodeModel";
+import { PadModel } from 'app/models/PadModel';
 
 @Component({
   selector: '[app-toolbox]',
@@ -11,7 +12,7 @@ import { NodeModel } from "../models/NodeModel";
 export class ToolboxComponent implements OnInit {
   
   @Output() onSelected = new EventEmitter<MetaNodeModel>();
-  @Input() context : BlueprintModel;
+  @Input() context : PadModel;
   @Input() x : number;
   @Input() y : number;
 

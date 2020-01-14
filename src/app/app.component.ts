@@ -7,7 +7,6 @@ import { StandardFormatReader } from './io/readers/project';
 import { ElectronService } from 'ngx-electron';
 import { PadModel } from './models/PadModel';
 
-
 @Component({
   selector: 'my-app',
   templateUrl: './app.component.html',
@@ -23,6 +22,7 @@ export class AppComponent implements OnInit  {
     this.electronWindow = this.electronService.remote.getCurrentWindow();
 
     this.fs = this.electronService.remote.require("fs").promises;
+    
   }
 
   ngOnInit(): void {

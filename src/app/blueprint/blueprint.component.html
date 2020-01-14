@@ -40,7 +40,7 @@
 				</g>
 			</g>
 		</g>
-		<g *ngIf="toolbox" app-toolbox [context]="model" [x]="toolboxPosition.x" [y]="toolboxPosition.y" (onSelected)="onSelectedTemplate($event)"></g>
+		<g *ngIf="toolbox" app-toolbox [context]="context" [x]="toolboxPosition.x" [y]="toolboxPosition.y" (onSelected)="onSelectedTemplate($event)"></g>
 	</g>
 
 	<!--splash screen -->

@@ -4,6 +4,7 @@ import { MetaNodeModel } from "../models/MetaNodeModel";
 import { Position } from "../models/Position";
 import { GameloopService } from '../gameloop.service'
 import { ActiveHotkeys } from 'app/models/Hotkeys';
+import { PadModel } from 'app/models/PadModel';
 
 @Component({
   selector: 'app-blueprint',
@@ -12,6 +13,7 @@ import { ActiveHotkeys } from 'app/models/Hotkeys';
 })
 export class BlueprintComponent implements OnInit {
   @Input() public model: BlueprintModel;
+  @Input() public context: PadModel;
   public get nodeCounter(): number { return this.model.nodes.length; }
   public get linkCounter(): number { return 0; }
   public get selectedCounter(): number { return this.model.selectedNodes.length; }

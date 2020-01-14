@@ -2,7 +2,8 @@ import { BlueprintModel } from './BlueprintModel';
 import { MetaNodeModel } from './MetaNodeModel';
 import { NodeModel } from './NodeModel';
 
-export class PadModel {
+
+export class PadModel  {
     public readonly collection = new Array<BlueprintModel>();
     public active: BlueprintModel = undefined;
     
