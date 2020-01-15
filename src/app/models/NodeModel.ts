@@ -10,6 +10,10 @@ export class NodeModel {
     public fields = new Array<FieldModel>();
     public template: MetaNodeModel = undefined;
 
+    public constructor(){
+        this.box.height = 150;
+        this.box.width = 150;
+    }
     public delete() {
         if (this.template) {
             this.template.remove(this);
@@ -75,6 +79,14 @@ export class NodeModel {
     public addBehavior(title = "behavior") {
         const field = new FieldModel(this);
         field.title = title;
+        this.fields.push(field);
+        this.sortFields();
+    }
+
+    public addStringBehavior(title = "behavior") {
+        const field = new FieldModel(this);
+        field.title = title;
+        field.formBehavior = "string";
         this.fields.push(field);
         this.sortFields();
     }

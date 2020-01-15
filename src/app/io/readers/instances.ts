@@ -1,6 +1,7 @@
 import { BlueprintModel } from "app/models/BlueprintModel";
 import { FieldModel } from "app/models/FieldModel";
 import { PadModel } from 'app/models/PadModel';
+import { NodeModel } from 'app/models/NodeModel';
 
 export class InstanceBUilder {
 
@@ -9,6 +10,7 @@ export class InstanceBUilder {
     }
 
     public load(instances: any) {
+        const todoLinks = new Array<{ node: NodeModel, inputs: any }>();
 
         for (let k in instances) {
             const instance = instances[k];
@@ -19,17 +21,24 @@ export class InstanceBUilder {
                 node.title = k;
 
                 if ('inputs' in instance) {
-                    for (let k in instance.inputs) {
-                        const val = instance.inputs[k];
-                        const field = node.getField(k);
-                        this.processInput(field, val);
-                    }
+                    todoLinks.push({ node: node, inputs: instance['inputs'] });
                 }
-
+                
                 this.blueprint.addNode(node);
+                console.debug("instance '" + this.blueprint.title + "." + k + "' is added")
             }
             else {
-                console.error("cannot resolve the type '" + instance.type + "' to add '"+ k +"' : declare the definition")
+                console.error("cannot resolve the type '" + instance.type + "' to add '" + k + "' : declare the definition")
+            }
+        }
+
+        // set field and make links
+        for (let todo of todoLinks) {
+            const node = todo.node;
+            for (let k in todo.inputs) {
+                const val = todo.inputs[k];
+                const field = node.getField(k);
+                this.processInput(field, val);
             }
         }
     }
@@ -69,7 +78,7 @@ export class InstanceBUilder {
             this.blueprint.addLink(field, source);
         }
         else {
-            console.error("cannot find the instance'"+ link.source +"' to link the field '"+ field.parent.title + "." + field.title +"' : set with an node's name")
+            console.error("cannot find the instance '" + link.source + "' to link the field '" + field.parent.title + "." + field.title + "' : set with an node's name")
         }
     }
 }

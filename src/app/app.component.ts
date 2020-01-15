@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import YAML from 'yaml'
 
-import { BlueprintModel } from "./models/BlueprintModel";
 import { StandardFormatReader } from './io/readers/project';
 import { ElectronService } from 'ngx-electron';
 import { PadModel } from './models/PadModel';
@@ -18,7 +17,7 @@ export class AppComponent implements OnInit  {
   private readonly electronWindow: Electron.BrowserWindow;
   private readonly fs: any;
   
-  constructor(private readonly electronService: ElectronService, private httpClient: HttpClient) {
+  constructor(private readonly electronService: ElectronService, private httpClient: HttpClient, private readonly cd:ChangeDetectorRef) {
     this.electronWindow = this.electronService.remote.getCurrentWindow();
 
     this.fs = this.electronService.remote.require("fs").promises;
@@ -30,7 +29,9 @@ export class AppComponent implements OnInit  {
 
     const self=this;
     const reader = new StandardFormatReader((x)=>self.FileSystemLoader(x), this.context);
-    reader.loadProject("multi-workspace.yml");
+    reader.loadProject("multi-workspace.yml").then(()=> {
+      self.cd.detectChanges(); // #fixed  : Zone.js is not compatible with ES2017
+    })
   }
 
   async FileSystemLoader(ref:string): Promise<any>{

@@ -16,8 +16,7 @@ export class StandardFormatReader {
     public async loadProject(ref: string): Promise<any> {
         const project = await this.loader(ref);
         const json = await this.applyImports(project);
-        this.context.addMetaNodeModels(loadMetaModels(json.definitions));
-        console.debug("definitions loaded", this.context.metaNodes);
+        this.context.addMetaNodeModels(...loadMetaModels(json.definitions));
         if ('blueprints' in json) {
             for(let blueprintTitle in json.blueprints) {
                 const blueprint = this.context.addBlueprint(blueprintTitle);

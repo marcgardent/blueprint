@@ -79,7 +79,7 @@ export class BlueprintComponent implements OnInit {
 
   @HostListener('document:keydown', ['$event'])
   keyDownEvent(event: KeyboardEvent) {
-    
+
     this.multiSelectControl = event.shiftKey;
 
     if (event.defaultPrevented || this.editingEnabled) {
@@ -150,7 +150,7 @@ export class BlueprintComponent implements OnInit {
     else {
       return;
     }
-    
+
     $event.preventDefault();
     $event.stopPropagation();
   }
@@ -161,7 +161,7 @@ export class BlueprintComponent implements OnInit {
     this.toolbox = !this.toolbox;
   }
 
-  private setMouse(x:number, y:number) {
+  private setMouse(x: number, y: number) {
     this.mouse.x = x;
     this.mouse.y = y;
     this.updateLogicMouse();

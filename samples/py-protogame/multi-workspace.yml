@@ -7,12 +7,14 @@ blueprints:
         scalar_string_1:
             position: {x: 10,  y: 10}
             type: input
+            constants:
+                description: "my description"
 
         the_token:
             position: {x: 300,  y: 300}
             type: output
             inputs:
-                self: { source: token_1, output: self }
+                out: { source: token_1, output: self }
         
         token_1:
             position: {x: 300, y: 100}
@@ -20,7 +22,7 @@ blueprints:
             inputs:
                 symbol : "X"
                 name : "name"
-                description : { source: scalar_string_1, output: self }      
+                description : { source: scalar_string_1, output: in }      
         list_1:
             position:  {x: 600, y: 100}
             type: List
