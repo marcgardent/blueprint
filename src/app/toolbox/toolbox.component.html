@@ -2,8 +2,9 @@
 	<rect x="-5000" y="-5000" width="10001" height="10001" fill="black" opacity="0.5" />
 	<foreignObject [attr.x]="x" [attr.y]="y" [attr.width]="200" [attr.height]="500" fill="black">
 		<xhtml:div class="root">
-      <h1>Toolbox</h1>
-      <div *ngFor="let template of context.metaNodes">
+	  <h1>Toolbox</h1>
+	  <input [(ngModel)]="filter" placeholder="title" />
+      <div *ngFor="let template of filtered">
         <button (click)="createInstance(template)">{{template.name}}</button>
       </div>
 		</xhtml:div>

@@ -15,7 +15,17 @@ export class ToolboxComponent implements OnInit {
   @Input() context : PadModel;
   @Input() x : number;
   @Input() y : number;
+  public filter : string = "";
 
+  public get filtered(): Array<MetaNodeModel>{
+    if (this.filter != ""){
+      const reg = new RegExp(this.filter, "i");
+      return this.context.metaNodes.filter( x=> reg.test(x.name));
+    }
+    else {
+      return this.context.metaNodes;
+    }
+  }
   constructor() { }
 
   ngOnInit(): void {
@@ -24,5 +34,6 @@ export class ToolboxComponent implements OnInit {
 
   public createInstance(template : MetaNodeModel): void {
     this.onSelected.emit(template);
+    this.filter = "";
   }
 }

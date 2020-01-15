@@ -3,4 +3,9 @@ div.root {
   background: black;
   height: 100%;
   width: 100%;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+button {
+  width: 100%;
 }
