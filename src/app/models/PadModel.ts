@@ -2,7 +2,6 @@ import { BlueprintModel } from './BlueprintModel';
 import { MetaNodeModel } from './MetaNodeModel';
 import { NodeModel } from './NodeModel';
 
-
 export class PadModel  {
     public readonly collection = new Array<BlueprintModel>();
     public active: BlueprintModel = undefined;
@@ -19,7 +18,14 @@ export class PadModel  {
         ret.title = title;
         this.collection.push(ret);
         this.active = ret;
+
+
         return ret;
+    }
+
+    public saveBlueprintAsType(blueprint : BlueprintModel) : void {
+        const meta = new MetaNodeModel(blueprint.asTemplate(), blueprint.title);
+        this.addMetaNodeModels(meta);
     }
 
     public addMetaNodeModels(...metanodes: MetaNodeModel[]) {

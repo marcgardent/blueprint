@@ -15,9 +15,22 @@ export class BlueprintModel {
     public readonly arrays = new Array<NodeModel>();
     public shadowLink: ShadowLinkModel = undefined;
     public shadowNode: NodeModel = undefined;
-    
-    constructor() {
 
+    constructor() {
+    }
+
+    public asTemplate(): NodeModel {
+        const node = new NodeModel();
+        node.title = this.title;
+        for(let n of this.nodes){
+            if(n.template.name == "input") {
+                node.addInput(n.title);
+            }
+            else if (n.template.name == "output"){
+                node.addOuput(n.title);
+            }
+        }
+        return node;
     }
 
     public dragInput(input: FieldModel, mousePos: Position) {

@@ -22,6 +22,7 @@ export class StandardFormatReader {
                 const blueprint = this.context.addBlueprint(blueprintTitle);
                 const inst = new InstanceBUilder(this.context, blueprint);
                 inst.load(json.blueprints[blueprintTitle]);
+                this.context.saveBlueprintAsType(blueprint);
             }
         }
     }
