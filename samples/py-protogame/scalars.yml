@@ -1,13 +1,21 @@
 
 definitions:
     String:
-        binding: "str"
+        binding:
+            python:
+                factory: str
+                package: builtin
+                reference: str
         inputs:
-            text : string
+            object : string
         outputs:
             self: string
     List:
-        binding: "list"
+        binding:
+            python:
+                factory: list
+                package: builtin
+                reference: list
         inputs:
             content : list(*)
         outputs:

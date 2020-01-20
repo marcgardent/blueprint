@@ -6,7 +6,11 @@ definitions:
     #########################
     Token:
     #########################
-        binding: "models.Token"
+        binding:
+            python: 
+                factory: "constructor"
+                package: "models"
+                reference: "Token"
         inputs:
             symbol : string
             name : string
@@ -16,7 +20,11 @@ definitions:
     #########################
     Counter:
     #########################
-        binding: "models.Counter"
+        binding:
+            python:
+                factory: "constructor"
+                package: "models"
+                reference: "Counter"
         inputs:
             token : Token
         outputs:
@@ -24,7 +32,11 @@ definitions:
     #########################
     Set:
     #########################
-        binding: "models.Set"
+        binding:
+            python:
+                factory: "constructor"
+                package: "models"
+                reference: "Set"
         inputs:
             token: Token
             content: list(Object)
@@ -34,7 +46,11 @@ definitions:
     Action:
     #########################
         description: "Do nothing is abstract of whole actions"
-        binding: "actions.Action"
+        binding:
+            python:
+                factory: "constructor"
+                package: "models"
+                reference: "Set"
         inputs:
             token :
                 type: Token
@@ -46,7 +62,11 @@ definitions:
     Composite:
     #########################
         description: "Composite is a entity with several traits (Actions)"
-        binding: "actions.Composite"
+        binding:
+            python:
+                factory: "constructor"
+                package: "models"
+                reference: "Composite"
         inputs:
             token:
                 type: Token
@@ -61,7 +81,11 @@ definitions:
     While:
     #########################
         description: "While can execute the action: do execute the action!"
-        binding: "actions.While"
+        binding:
+            python:
+                factory: "constructor"
+                package: "actions"
+                reference: "While"
         inputs:
             token:
                 type: Token

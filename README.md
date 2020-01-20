@@ -9,12 +9,18 @@
 * Toolbox (imported from generic format)
 * edit constant values in a form (string, number)
 * multi-workspace
-* Desktop App multiplaform (electron)
-
-## Wishlist 
-
 * Workspace as a template
-* Export engine
+* Desktop App multiplaform (electron)
+* the model support multi-binding
+
+## Issues
+
+* create link > select a node not connected > delete the node
+  * excepted : link hasn't to delete
+
+## Wishlist
+
+* Export engine (templating with Nunjucks lib)
 * backend-server for multi-users usage 
 
 ## TODO

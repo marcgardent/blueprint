@@ -33,9 +33,9 @@ blueprints:
                     - {source: token_1, output: self }
     
     myworkspace:
-        #group_01:
-        #    position: {x: 200, y: 200}
-        #    type: blueprints(my_group_01)
+        group_01:
+            position: {x: 200, y: 200}
+            type: my_group_01
 
         scalar_string_1:
             position: {x: 10,  y: 10}
