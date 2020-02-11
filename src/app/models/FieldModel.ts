@@ -19,6 +19,11 @@ export class FieldModel {
 
     
     public constructor(public readonly parent: NodeModel) {
+
+    }
+
+    public get isConstant() : boolean {
+        return this.formBehavior !== "none" && this.inputLink === undefined
     }
 
     public setInputLink(from: FieldModel) {

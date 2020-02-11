@@ -1,6 +1,8 @@
 import { NodeModel } from './NodeModel';
+import { BindingModel, ExportModel } from './ExportModel';
 
 export class MetaNodeModel {
+    public binding: BindingModel = undefined;
     public readonly instances: Array<NodeModel> = new Array();
     public constructor(public readonly template: NodeModel, public readonly name) {
     }

@@ -1,6 +1,7 @@
 imports: 
     scalars : "scalars.yml"
     protogames : "protogame.yml"
+    exportpy : "export-python.yml"
     
 blueprints:
     my_group_01:

@@ -1,6 +1,7 @@
 import { Box } from './Box';
 import { FieldModel } from "./FieldModel";
 import { MetaNodeModel } from "./MetaNodeModel";
+import { ExportModel } from './ExportModel';
 
 export class NodeModel {
     public title: string = "Node";
@@ -9,6 +10,7 @@ export class NodeModel {
     public box: Box = new Box();
     public fields = new Array<FieldModel>();
     public template: MetaNodeModel = undefined;
+    
 
     public constructor(){
         this.box.height = 150;

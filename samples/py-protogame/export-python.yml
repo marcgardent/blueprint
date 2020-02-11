@@ -6,14 +6,15 @@ exports:
             #
             # this file is auto-generated with blueprint
             #
-            {{imports | sorted | multilines}}
-
-            def {{ blueprint }}({{args | as_key_value(':') }}):
+            {% for module, reference in |dictsort %}
+                from {{item.module}} import {{item.references | join(',')}} 
+            {% endfor %}
+            
+            def {{ blueprint }}({{inputs | as_kvargs }}):
                 return {{ content }}
-        import_statement: from {{ package }} import {{ reference }}
         factories:
-            function: {{ reference }}($args | as_key_value(':'))
-            constructor: {{ reference }}($args | as_key_value(':'))
+            function: "{{ reference }}($args | as_kvargs)"
+            constructor: "{{ reference }}($args | as_kvargs)"
             list: "[ {{ args['content'] | as_array }} ]"
             string: str( {{  args['text']) }}
 
