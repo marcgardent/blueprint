@@ -1,0 +1,14 @@
+.spot{
+  fill :white;
+  stroke : black;
+}
+
+.snap {
+  stroke: transparent;
+  fill: transparent;
+  opacity: 0.5;
+}
+
+.snap:hover {
+  stroke: yellow;
+}
