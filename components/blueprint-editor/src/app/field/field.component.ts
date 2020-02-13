@@ -1,6 +1,6 @@
 import { Component, OnInit, Input  } from '@angular/core';
-import { BlueprintModel } from "../models/BlueprintModel";
-import { FieldModel } from "../models/FieldModel";
+import { BlueprintModel } from "blueprint-core/dist/models/BlueprintModel";
+import { FieldModel } from "blueprint-core/dist/models/FieldModel";
 
 @Component({
   selector: '[app-field]',

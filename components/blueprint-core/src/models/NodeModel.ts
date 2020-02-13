@@ -1,7 +1,6 @@
 import { Box } from './Box';
 import { FieldModel } from "./FieldModel";
 import { MetaNodeModel } from "./MetaNodeModel";
-import { ExportModel } from './ExportModel';
 
 export class NodeModel {
     public title: string = "Node";

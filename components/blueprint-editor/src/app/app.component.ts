@@ -2,9 +2,9 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import YAML from 'yaml'
 
-import { StandardFormatReader } from './io/readers/project';
+import { StandardFormatReader } from 'blueprint-core/dist/io/readers/project';
 import { ElectronService } from 'ngx-electron';
-import { PadModel } from './models/PadModel';
+import { PadModel } from 'blueprint-core/dist/models/PadModel';
 
 @Component({
   selector: 'my-app',

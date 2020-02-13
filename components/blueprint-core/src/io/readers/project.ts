@@ -1,7 +1,6 @@
-import { BlueprintModel } from "models/BlueprintModel";
 import { loadMetaModels } from './definitions';
 import { InstanceBUilder } from './instances';
-import { PadModel } from 'models/PadModel';
+import { PadModel } from '../../models/PadModel';
 
 export interface Iloader {
     (ref: string): Promise<any>;

@@ -1,9 +1,6 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
-import { BlueprintModel } from "blueprint-core/models/BlueprintModel";
-import { MetaNodeModel } from "blueprint-core/models/MetaNodeModel";
-import { NodeModel } from "blueprint-core/models/NodeModel";
-import { PadModel } from 'blueprint-core/models/PadModel';
-
+import { MetaNodeModel } from "blueprint-core/dist/models/MetaNodeModel";
+import { PadModel } from 'blueprint-core/dist/models/PadModel'; 
 
 @Component({
   selector: '[app-toolbox]',

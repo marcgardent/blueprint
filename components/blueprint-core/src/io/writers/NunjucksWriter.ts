@@ -1,8 +1,8 @@
-import { ExportModel, BindingModel } from 'models/ExportModel';
-import { NodeModel } from 'models/NodeModel';
-import { PadModel } from 'models/PadModel';
+import { ExportModel, BindingModel } from '../../models/ExportModel';
+import { NodeModel } from '../../models/NodeModel';
+import { PadModel } from '../../models/PadModel';
 import { Environment } from 'nunjucks';
-import { BlueprintModel } from 'models/BlueprintModel';
+import { BlueprintModel } from '../../models/BlueprintModel';
 
 interface IReferences {
     [key: string]: Array<string>;

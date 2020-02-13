@@ -1,7 +1,7 @@
-import { BlueprintModel } from "models/BlueprintModel";
-import { FieldModel } from "models/FieldModel";
-import { PadModel } from 'models/PadModel';
-import { NodeModel } from 'models/NodeModel';
+import { BlueprintModel } from "../../models/BlueprintModel";
+import { FieldModel } from "../../models/FieldModel";
+import { PadModel } from '../../models/PadModel';
+import { NodeModel } from '../../models/NodeModel';
 
 export class InstanceBUilder {
 

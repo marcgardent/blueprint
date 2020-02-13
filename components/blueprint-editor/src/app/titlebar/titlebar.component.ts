@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
-import { PadModel } from 'app/models/PadModel';
+import { PadModel } from 'blueprint-core/dist/models/PadModel';
 
 @Component({
   selector: 'app-titlebar',

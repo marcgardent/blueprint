@@ -1,10 +1,10 @@
 import { Component, OnInit, HostListener, Input } from '@angular/core';
-import { BlueprintModel } from "../models/BlueprintModel";
-import { MetaNodeModel } from "../models/MetaNodeModel";
-import { Position } from "../models/Position";
-import { GameloopService } from '../gameloop.service'
-import { ActiveHotkeys } from 'app/models/Hotkeys';
-import { PadModel } from 'app/models/PadModel';
+import { BlueprintModel } from "blueprint-core/dist/models/BlueprintModel";
+import { MetaNodeModel } from "blueprint-core/dist/models/MetaNodeModel";
+import { Position } from "blueprint-core/dist/models/Position";
+import { GameloopService } from 'app/gameloop.service';
+import { PadModel } from 'blueprint-core/dist/models/PadModel';
+import { ActiveHotkeys } from 'app/viewmodel/Hotkeys';
 
 @Component({
   selector: 'app-blueprint',

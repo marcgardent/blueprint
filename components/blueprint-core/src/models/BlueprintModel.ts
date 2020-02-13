@@ -1,6 +1,5 @@
 import { Position } from './Position';
 import { NodeModel } from './NodeModel';
-import { MetaNodeModel } from './MetaNodeModel';
 import { FieldModel } from './FieldModel';
 import { ShadowLinkModel } from './ShadowLinkModel';
 
