@@ -3,7 +3,7 @@
 
 ## Users
 
-* `coder` : is the user who provides the stuff to create and export `blueprints` as application. the stuff is called `backend`.
+* `coder` : is the user who provides the stuff to create and export `blueprints` as an application. the stuff is called `backend`.
 * `designer` : is the user who creates `blueprints` in the `blueprint-editor` with the `backend` provided by the `coder`.
 
 ## Glossary of designer
