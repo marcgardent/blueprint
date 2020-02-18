@@ -2,7 +2,7 @@
 exports:
     python:
         extension : py
-        blueprint_file: |
+        main: |
             #
             # this file is auto-generated with blueprint
             #
