@@ -22,7 +22,7 @@
   *  `output-field` : is a field with an output connector to able to `link` with `input-field`
   *  `form-field` : is a field can be setted with a constant.
   *  the field is polymo 
-* `link` : is a part of `blueprint` created by the `designer`. It's able to connect an `output-field` with an `input-field`.
+* `link` : is a part of a `blueprint` which is created by the `designer`. It's able to connect an `output-field` with an `input-field`.
 
 
 ## Glossary of coder
