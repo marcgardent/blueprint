@@ -8,34 +8,34 @@
             "name": "Debug Main Process",
             "type": "node",
             "request": "launch",
-            "cwd": "${workspaceRoot}",
-            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
+            "cwd": "${workspaceRoot}/components/blueprint-editor",
+            "runtimeExecutable": "${workspaceRoot}/components/blueprint-editor/node_modules/.bin/electron",
             "windows": {
-                "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
+                "runtimeExecutable": "${workspaceRoot}/components/blueprint-editor/node_modules/.bin/electron.cmd"
             },
-            "program": "${workspaceRoot}/main.js",
+            "program": "${workspaceRoot}/components/blueprint-editor/main.js",
             "protocol": "inspector"
         },
         {
             "name": "Debug Renderer Process",
             "type": "chrome",
             "request": "launch",
-            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
+            "runtimeExecutable": "${workspaceRoot}/components/blueprint-editor/node_modules/.bin/electron",
             "windows": {
-                "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
+                "runtimeExecutable": "${workspaceRoot}/components/blueprint-editor/node_modules/.bin/electron.cmd"
             },
             "runtimeArgs": [
-                "${workspaceRoot}/main.js",
+                "${workspaceRoot}/components/blueprint-editor/main.js",
                 "--remote-debugging-port=9222"
             ],
             // "trace": "verbose", // to debug the debugger
-            "webRoot": "${workspaceRoot}/dist/",    // [DEBUG WITH VSCODE] debugger detects the electron's main.js rather than the angular's main.js!
+            "webRoot": "${workspaceRoot}/components/blueprint-editor/dist/",    // [DEBUG WITH VSCODE] debugger detects the electron's main.js rather than the angular's main.js!
             "sourceMapPathOverrides": {             // [DEBUG WITH VSCODE] And so replace webRoot with workspaceRoot to find *.ts files
-                "webpack:///./*": "${workspaceRoot}/*", 
-                "webpack:///src/*": "${workspaceRoot}/*",
+                "webpack:///./*": "${workspaceRoot}/components/blueprint-editor/*", 
+                "webpack:///src/*": "${workspaceRoot}/components/blueprint-editor/*",
                 "webpack:///*": "*",
-                "webpack:///./~/*": "${workspaceRoot}/node_modules/*",
-                "meteor://💻app/*": "${workspaceRoot}/*"
+                "webpack:///./~/*": "${workspaceRoot}/components/blueprint-editor/node_modules/*",
+                "meteor://💻app/*": "${workspaceRoot}/components/blueprint-editor/*"
             }
         }
     ]
